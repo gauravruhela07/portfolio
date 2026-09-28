@@ -33,19 +33,13 @@ backend connection.
 The résumé is embedded once as a base64 data URL in the contact download link.
 When changing the PDF, update both that embedded copy and `GauravRuhelaCV.pdf`.
 
-## Deploy
+## Live site
 
-This repository is ready for static hosting on GitHub Pages, Cloudflare Pages,
-Netlify, or Vercel. It does not need a build command.
+[Open the portfolio](https://gauravruhela07.github.io/portfolio/).
 
-For GitHub Pages, choose **Settings → Pages → Deploy from a branch**, then
-select **main** and **/(root)**. For this repository, the default project-site
-address would be `https://gauravruhela07.github.io/portfolio/`.
-Publishing the repository alone does not enable Pages.
-
-Before publishing, add the final URL to the canonical link and `og:url`,
-`og:image`, and `twitter:image` metadata in `index.html`. Use the absolute URL of
-`og-image.png`, and change `twitter:card` to `summary_large_image`.
+GitHub Pages publishes the `main` branch from `/(root)` after each commit.
+The site needs no build command. Its canonical and social preview metadata point
+to the live Pages URL and the included `og-image.png`.
 
 ## Fonts
 
