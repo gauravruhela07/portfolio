@@ -181,7 +181,7 @@
     @media(max-width:380px){.hero-location{font-size:11px;letter-spacing:.08em;gap:8px}.hero-location::before{flex:0 0 20px}.featured-visual .card-proof{flex-direction:column;align-items:flex-start;gap:8px}.featured-visual .proof-label{width:100%;max-width:none;font-size:11px}.featured-visual .proof-scope{max-width:none}}
 
     /* A miniature developer workspace, rendered entirely with CSS and inline SVG. */
-    .hero-layout{gap:clamp(24px,4vw,64px)}.hero-canvas{opacity:.25}
+    .hero-layout{gap:clamp(24px,4vw,64px)}
     .hero-system{width:100%;max-width:520px;justify-self:end;min-width:0}
     .system-art{position:relative;isolation:isolate}
     .system-kicker{display:flex;align-items:center;gap:9px;color:var(--muted);font:10px/1.6 var(--mono);letter-spacing:.12em;padding:0 12px}
@@ -1416,24 +1416,24 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   });
 
   // Hero background: a drifting constellation behind the whole hero. Nearby
-  // points link up, and the cursor pulls in accent links and nudges points away.
+  // points link up, signals travel between them, and the cursor nudges them away.
   // Paused or reduced motion shows one still frame instead.
   function initCanvas() {
     var canvas = document.querySelector('.hero-canvas');
     var ctx = canvas && canvas.getContext('2d');
     if (!ctx) return;
     var hero = canvas.parentElement;
-    var width = 0, height = 0, last = 0, visible = true;
+    var width = 0, height = 0, last = 0, elapsed = 0, visible = true;
     var dots = [];
     var pointer = { x: 0, y: 0, active: false };
     var workAttractor = { x: 0, y: 0, active: false };
     var workButton = document.querySelector('.hero-actions a[href="#work"]');
-    var accent = '', lineColor = '';
-    var LINK = 128, REACH = 170;
+    var accent = '', linkOpacity = 0;
+    var LINK = 148, REACH = 170;
     function readColors() {
       var styles = getComputedStyle(root);
       accent = styles.getPropertyValue('--accent').trim();
-      lineColor = styles.getPropertyValue('--muted').trim();
+      linkOpacity = root.dataset.theme === 'light' ? 0.52 : 0.38;
     }
     function seed() {
       var state = 11;
@@ -1441,7 +1441,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       var count = Math.round(Math.max(26, Math.min(96, width * height / 13000)));
       dots = [];
       for (var i = 0; i < count; i++) {
-        dots.push({ x: random() * width, y: random() * height, vx: (random() - 0.5) * 0.16, vy: (random() - 0.5) * 0.16, r: random() < 0.22 ? 1.7 : 1.1 });
+        dots.push({ x: random() * width, y: random() * height, vx: (random() - 0.5) * 0.44, vy: (random() - 0.5) * 0.44, r: random() < 0.22 ? 2.2 : 1.4 });
       }
     }
     function resize() {
@@ -1456,6 +1456,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     }
     function paint(dt) {
       var i, j, a, b, dx, dy, dist;
+      elapsed += dt;
       ctx.clearRect(0, 0, width, height);
       for (i = 0; i < dots.length; i++) {
         a = dots[i];
@@ -1469,8 +1470,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           if (a.y < -20) a.y = height + 20; else if (a.y > height + 20) a.y = -20;
         }
       }
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 1.15;
+      ctx.strokeStyle = accent;
+      ctx.fillStyle = accent;
       for (i = 0; i < dots.length; i++) {
         a = dots[i];
         for (j = i + 1; j < dots.length; j++) {
@@ -1478,8 +1480,15 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
           if (dx > LINK || dx < -LINK || dy > LINK || dy < -LINK) continue;
           dist = Math.sqrt(dx * dx + dy * dy);
           if (dist >= LINK) continue;
-          ctx.globalAlpha = (1 - dist / LINK) * 0.28;
+          var strength = 1 - dist / LINK;
+          ctx.globalAlpha = strength * linkOpacity;
           ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          // Sparse signals share the existing clock and freeze with the network.
+          if ((i * 7 + j) % 11 === 0) {
+            var travel = (elapsed / 3200 + i * 0.19 + j * 0.31) % 1;
+            ctx.globalAlpha = Math.sin(travel * Math.PI) * strength * 0.95;
+            ctx.beginPath(); ctx.arc(a.x - dx * travel, a.y - dy * travel, 2.3, 0, Math.PI * 2); ctx.fill();
+          }
         }
       }
       if (pointer.active) {
@@ -1503,7 +1512,11 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       ctx.fillStyle = accent;
       for (i = 0; i < dots.length; i++) {
         a = dots[i];
-        ctx.globalAlpha = a.r > 1.5 ? 0.85 : 0.5;
+        if (a.r > 2) {
+          ctx.globalAlpha = 0.09;
+          ctx.beginPath(); ctx.arc(a.x, a.y, 6, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.globalAlpha = a.r > 2 ? 0.9 : 0.62;
         ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2); ctx.fill();
       }
       ctx.globalAlpha = 1;
