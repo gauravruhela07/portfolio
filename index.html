@@ -268,7 +268,64 @@
     .module-back,.module-left,.module-bottom{position:absolute;inset:0;border:1px solid #718260;border-radius:8px;background:linear-gradient(140deg,#384d2c,#23331b);backface-visibility:visible}
     .module-back{transform:rotateY(180deg) translateZ(26px)}.module-left{transform:rotateY(-90deg) translateZ(26px)}.module-bottom{transform:rotateX(-90deg) translateZ(26px)}
     .laptop-bottom{position:absolute;inset:-5px 0;width:252px;height:170px;transform:translateY(67px) rotateX(-90deg);background:linear-gradient(135deg,#899a77,#5e7050);border:1px solid #9cab89;border-radius:9px;backface-visibility:hidden}
-    .laptop-base-rear{position:absolute;left:0;top:140px;width:252px;height:7px;background:#6d7d5e;transform:translateZ(-85px)}
+    .laptop-base-rear{position:absolute;left:0;top:140px;width:252px;height:7px;background:#6d7d5e;transform:translateZ(-85px)}    /* The laptop display is a real four-part assembly: shell, board, glass, screen.
+       Dragging separates those parts along their own depth axis. */
+    .core-viewport{perspective:1100px;touch-action:pan-y}
+    .workspace-idle{animation:none;transform:none}
+    .workspace-laptop{transform:translateY(4px) rotateX(-13deg) rotateY(-12deg)}
+    .laptop-screen .workspace-slice{position:absolute;border-radius:11px;backface-visibility:visible;transform:translateZ(calc(var(--layer-depth) * var(--fan,1)));transform-style:preserve-3d}
+    .screen-shell{inset:-9px -10px;background:linear-gradient(135deg,#c6d3bd 0%,#829776 42%,#536649 76%,#a9bb9a);border:1px solid #d1ddc7;box-shadow:inset 0 0 0 2px #526447,0 2px 5px #08100755}
+    .shell-inlay{position:absolute;inset:7px;border:1px solid #9bae8a;border-radius:7px;background:linear-gradient(140deg,#718367,#45543d)}
+    .shell-screw{position:absolute;width:3px;height:3px;border-radius:50%;background:#dde8d4;box-shadow:0 1px 1px #21301b}
+    .screw-a{top:4px;left:4px}.screw-b{top:4px;right:4px}.screw-c{bottom:4px;left:4px}.screw-d{bottom:4px;right:4px}
+    .screen-board{inset:-6px -7px;background:linear-gradient(135deg,#2e4930,#112b1d);border:1px solid #8cac69;box-shadow:inset 0 0 0 3px #3e643c,0 0 10px #91c8761a;color:#a2be72}
+    .screen-board svg{width:100%;height:100%;opacity:.8}
+    .screen-glass{inset:-3px -4px;background:linear-gradient(140deg,#789f8270,#5b806a24 45%,#aecdad55);border:1px solid #accfad;box-shadow:inset 0 0 15px #aecdad44}
+    .glass-reflection{position:absolute;inset:0;border-radius:inherit;background:linear-gradient(120deg,transparent 36%,#e6ffe344 37%,transparent 57%)}
+    .laptop-screen .laptop-display{inset:0;background:linear-gradient(145deg,#354032,#151c14 70%);border:1px solid #b4c7a2;box-shadow:inset 0 0 0 2px #242d20,0 1px 5px #05110455}
+    .workspace-titlebar{height:21px;gap:10px}
+    .workspace-titlebar .editor-tab{width:34px;height:4px;background:#94b57e;border-radius:2px}
+    .workspace-titlebar .editor-tab-muted{width:22px;background:#3d5638}
+    .workspace-editor{position:relative;display:flex;gap:9px;padding:12px 11px 10px}
+    .editor-gutter{display:grid;gap:8px;padding-top:2px}
+    .editor-gutter i{display:block;width:4px;height:4px;background:#57754b;border-radius:1px}
+    .editor-lines{display:grid;gap:7px;align-content:start;width:100%}
+    .editor-lines>div{display:flex;align-items:center;gap:5px;height:5px}
+    .editor-lines>div.indent{padding-left:10px}
+    .editor-lines i{display:block;height:4px;border-radius:2px;background:#b8ccb0}
+    .editor-lines .token-accent{background:#c5f277}.editor-lines .token-muted{background:#71896a}
+    .editor-lines .token-short{width:19px}.editor-lines .token-mid{width:38px}.editor-lines .token-long{width:63px}
+    .editor-lines .editor-cursor{width:3px;height:8px;border-radius:0;background:#c5f277}
+    .editor-success{position:absolute;right:10px;bottom:8px;width:24px;height:24px;color:#b8e78f}
+    .workspace-routes{pointer-events:none}
+    @media(prefers-reduced-motion:reduce){.workspace-routes .route{animation:none!important}}
+    .system-readout{padding:12px 0 0;min-height:190px}
+    .scene-heading{display:flex;justify-content:center;align-items:center;gap:7px;min-height:30px;margin-bottom:10px;font:17px/26px var(--display)}
+    .scene-heading>span:first-child{color:var(--muted)}
+    .scene-rotator{position:relative;display:inline-block;height:26px;overflow:hidden;vertical-align:bottom;color:var(--text);transition:width 550ms cubic-bezier(.3,0,.2,1);white-space:nowrap}
+    .scene-word{width:max-content;display:block;position:absolute;left:0;top:0;height:26px;line-height:26px;white-space:nowrap}
+    .scene-word:first-child{position:relative}.scene-caret{color:var(--accent);animation:scene-caret 1s step-end infinite}
+    .scene-checklist{list-style:none;margin:12px 0;padding:0;display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
+    .scene-checklist li{font:10px/1.6 var(--mono);color:var(--muted);border:1px solid var(--line);padding:3px 7px;border-radius:4px}
+    .scene-checklist li::before{content:'✓';color:var(--accent);margin-right:5px}
+    .scene-call{font:10px/1.7 var(--mono);color:var(--muted);margin:10px 0 12px}.scene-call span{color:var(--accent)}
+    .workspace-controls{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:-12px;padding-bottom:4px}
+    .workspace-controls button{width:36px;min-height:36px;color:var(--muted);background:transparent;border-radius:5px;font:16px var(--mono);transition:color .2s,background .2s}
+    .workspace-controls button:hover{color:var(--accent);background:var(--accent-soft)}
+    .system-wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:1;fill:none;stroke:var(--accent);stroke-width:1;opacity:.65}
+    .system-wires path{stroke-dasharray:3 7;animation:workspace-signal 3s linear infinite paused}
+    .system-art.scene-running .system-wires path{animation-play-state:running}
+    .workspace-routes{display:none}
+    .cursor-trail{position:fixed;inset:0;z-index:30;pointer-events:none;overflow:hidden;contain:strict}
+    .cursor-trail i{position:absolute;width:4px;height:4px;margin:-2px 0 0 -2px;background:var(--accent);border-radius:50%;animation:trail-fade .85s ease-out both}
+    @keyframes trail-fade{from{opacity:.65;transform:scale(1)}to{opacity:0;transform:scale(.3)}}
+    @keyframes scene-caret{50%{opacity:0}}
+    .motion-paused .scene-caret{animation:none}.motion-paused .system-wires path{animation-play-state:paused}
+    .system-art:not(.scene-running) .scene-caret{animation-play-state:paused}
+    @media(max-width:760px){.system-readout{min-height:194px}.scene-heading{font-size:15px}.scene-checklist li{font-size:9px;padding:3px 5px}.workspace-controls button{min-height:44px;width:44px}}
+    @media print{.cursor-trail{display:none}}
+    .motion-paused .scene-rotator{transition:none}
+
   </style>
 <!-- Embedded font licenses
 Copyright 2020 The Space Grotesk Project Authors (https://github.com/floriankarsten/space-grotesk)
@@ -473,7 +530,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     </div><div class="scroll-progress" aria-hidden="true"></div>
   </header>
   <main id="main" tabindex="-1">
-    <section class="hero" id="home" aria-labelledby="hero-title">
+    <section class="hero" id="home" data-anim="hero" data-scene="backend" aria-labelledby="hero-title">
       <canvas class="hero-canvas" aria-hidden="true"></canvas>
       <div class="wrap">
         <div class="hero-layout">
@@ -489,38 +546,49 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 <div class="hero-system">
   <div class="system-art" id="system-art" data-mode="backend">
     <div class="system-kicker"><span class="system-led" aria-hidden="true"></span> SYSTEMS, CONNECTED <span class="system-index" aria-hidden="true">01 / 03</span></div>
-    <div class="core-viewport" tabindex="0" role="group" aria-label="Interactive developer workspace. Drag to rotate, or use arrow keys. Press Home to reset the view." aria-describedby="workspace-instructions">
+    <div class="core-viewport" data-anim="stage" aria-hidden="true">
       <div class="workspace-art" aria-hidden="true">
         <div class="core-halo"></div><div class="core-grid"></div><div class="workspace-shadow"></div>
-        <div class="workspace-perspective"><div class="workspace-rotation"><div class="workspace-idle">
-          <div class="workspace-floor"><div class="floor-outline"></div><svg class="workspace-routes" viewBox="0 0 420 340" fill="none" focusable="false"><path class="route route-backend" d="M100 93v56q0 15 15 15h95v63"/><path class="route route-ai" d="M329 103v45q0 16-16 16H210v63"/><path class="route route-tools" d="M343 283h-57q-16 0-16-16v-40h-60"/><circle cx="100" cy="93" r="4"/><circle cx="329" cy="103" r="4"/><circle cx="343" cy="283" r="4"/><circle cx="210" cy="227" r="5"/></svg></div>
+        <div class="workspace-perspective"><div class="workspace-rotation" data-anim="box"><div class="workspace-idle">
+          <div class="workspace-floor"><div class="floor-outline"></div><svg class="workspace-routes" aria-hidden="true" viewBox="0 0 420 340" fill="none" focusable="false"><path class="route route-backend" d="M100 93v56q0 15 15 15h95v63"/><path class="route route-ai" d="M329 103v45q0 16-16 16H210v63"/><path class="route route-tools" d="M343 283h-57q-16 0-16-16v-40h-60"/><circle cx="100" cy="93" r="4"/><circle cx="329" cy="103" r="4"/><circle cx="343" cy="283" r="4"/><circle cx="210" cy="227" r="5"/></svg></div>
           <div class="workspace-laptop">
             <div class="laptop-screen">
-              <div class="lid-back"><span>g.</span></div>
-              <div class="lid-rim"></div>
-              <div class="laptop-display">
+              <div class="workspace-slice screen-shell" data-anim="layer" style="--layer-depth:-30px"><div class="shell-inlay"></div><i class="shell-screw screw-a"></i><i class="shell-screw screw-b"></i><i class="shell-screw screw-c"></i><i class="shell-screw screw-d"></i></div>
+              <div class="workspace-slice screen-board" data-anim="layer" style="--layer-depth:-18px"><svg viewBox="0 0 240 156" fill="none" focusable="false"><g stroke="currentColor" stroke-width="1.5"><path d="M24 32h45v22h33m-78 11h28v26h51m-81 33h55V98h28M216 34h-46v21h-30m76 10h-24v28h-51m76 28h-44V99h-31"/><rect x="101" y="51" width="42" height="52" rx="4"/><path d="M110 45v6m12-6v6m12-6v6m-24 52v7m12-7v7m12-7v7"/><circle cx="24" cy="32" r="3"/><circle cx="24" cy="65" r="3"/><circle cx="22" cy="124" r="3"/><circle cx="216" cy="34" r="3"/><circle cx="216" cy="65" r="3"/><circle cx="217" cy="121" r="3"/></g></svg></div>
+              <div class="workspace-slice screen-glass" data-anim="layer" style="--layer-depth:-6px"><div class="glass-reflection"></div></div>
+              <div class="workspace-slice laptop-display" data-anim="layer" style="--layer-depth:6px">
                 <span class="laptop-camera"></span>
                 <div class="workspace-terminal">
-                  <div class="workspace-titlebar"><span><i></i><i></i><i></i></span><b>gaurav ~ workspace</b></div>
-                  <div class="workspace-code"><p><span class="code-prompt">❯</span> build something useful</p><p><span class="code-dim">01</span> <span class="code-purple">connect</span>(<span class="code-green">services</span>)</p><p><span class="code-dim">02</span> <span class="code-purple">inspect</span>(<span class="code-green">actions</span>)</p><p><span class="code-dim">03</span> <span class="code-purple">ship</span>(<span class="code-green">with_confidence</span>)</p><div class="workspace-terminal-status"><span>✓</span> ready to build<span class="workspace-caret"></span></div></div>
+                  <div class="workspace-titlebar"><span><i></i><i></i><i></i></span><i class="editor-tab"></i><i class="editor-tab editor-tab-muted"></i></div>
+                  <div class="workspace-editor">
+                    <div class="editor-gutter"><i></i><i></i><i></i><i></i><i></i></div>
+                    <div class="editor-lines"><div><i class="token-accent token-short"></i><i class="token-mid"></i></div><div class="indent"><i class="token-muted token-short"></i><i class="token-long"></i></div><div class="indent"><i class="token-accent token-mid"></i><i class="token-short"></i></div><div class="indent"><i class="token-muted token-short"></i><i class="token-mid"></i></div><div><i class="token-accent token-short"></i><i class="editor-cursor"></i></div></div>
+                    <svg class="editor-success" viewBox="0 0 32 32" fill="none" focusable="false"><circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.5"/><path d="m9 16 5 5 9-10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
                 </div>
-                <span class="laptop-signature">GAURAV / ENGINEERING</span>
               </div>
             </div>
             <div class="laptop-hinge"></div>
             <div class="laptop-deck"><div class="speaker speaker-left"></div><div class="keyboard"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="speaker speaker-right"></div><div class="trackpad"></div></div>
             <div class="laptop-bottom"></div><div class="laptop-base-rear"></div><div class="laptop-base-front"><i></i></div><div class="laptop-base-left"></div><div class="laptop-base-right"></div>
           </div>
-          <div class="workspace-module module-backend"><div class="module-block"><div class="module-top"></div><div class="module-side"></div><div class="module-back"></div><div class="module-left"></div><div class="module-bottom"></div><div class="module-front"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><ellipse cx="16" cy="8" rx="10" ry="4"/><path d="M6 8v16c0 5 20 5 20 0V8M6 16c0 5 20 5 20 0"/></svg><span class="module-led"></span></div></div><div class="module-label"><strong>DATA</strong><span>store · retrieve</span></div></div><div class="workspace-module module-ai"><div class="module-block"><div class="module-top"></div><div class="module-side"></div><div class="module-back"></div><div class="module-left"></div><div class="module-bottom"></div><div class="module-front"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><rect x="5" y="10" width="22" height="17" rx="5"/><path d="M16 5v5M12 20h8"/><circle cx="16" cy="4" r="1"/><path d="M11 16h1m8 0h1M2 16v6m28-6v6"/></svg><span class="module-led"></span></div></div><div class="module-label"><strong>AGENTS</strong><span>inspect · act</span></div></div><div class="workspace-module module-tools"><div class="module-block"><div class="module-top"></div><div class="module-side"></div><div class="module-back"></div><div class="module-left"></div><div class="module-bottom"></div><div class="module-front"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="m11 8-8 8 8 8m10-16 8 8-8 8M18 5l-4 22"/></svg><span class="module-led"></span></div></div><div class="module-label"><strong>APIs</strong><span>connect · build</span></div></div>
+          <div data-anim="wire-target" class="workspace-module module-backend"><div class="module-block"><div class="module-top"></div><div class="module-side"></div><div class="module-back"></div><div class="module-left"></div><div class="module-bottom"></div><div class="module-front"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><ellipse cx="16" cy="8" rx="10" ry="4"/><path d="M6 8v16c0 5 20 5 20 0V8M6 16c0 5 20 5 20 0"/></svg><span class="module-led"></span></div></div></div><div data-anim="wire-target" class="workspace-module module-ai"><div class="module-block"><div class="module-top"></div><div class="module-side"></div><div class="module-back"></div><div class="module-left"></div><div class="module-bottom"></div><div class="module-front"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><rect x="5" y="10" width="22" height="17" rx="5"/><path d="M16 5v5M12 20h8"/><circle cx="16" cy="4" r="1"/><path d="M11 16h1m8 0h1M2 16v6m28-6v6"/></svg><span class="module-led"></span></div></div></div><div data-anim="wire-target" class="workspace-module module-tools"><div class="module-block"><div class="module-top"></div><div class="module-side"></div><div class="module-back"></div><div class="module-left"></div><div class="module-bottom"></div><div class="module-front"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="m11 8-8 8 8 8m10-16 8 8-8 8M18 5l-4 22"/></svg><span class="module-led"></span></div></div></div>
         </div></div></div>
       </div>
     </div>
+    <div class="workspace-controls" role="group" aria-label="Rotate the developer workspace"><button type="button" data-rotate="left" aria-label="Rotate workspace left">←</button><button type="button" data-rotate="up" aria-label="Rotate workspace up">↑</button><button type="button" data-rotate="down" aria-label="Rotate workspace down">↓</button><button type="button" data-rotate="right" aria-label="Rotate workspace right">→</button></div>
     <div class="system-modes" role="group" aria-label="Explore areas of work">
       <button type="button" data-core-mode="backend" aria-pressed="true">Backend</button>
       <button type="button" data-core-mode="ai" aria-pressed="false">Applied AI</button>
       <button type="button" data-core-mode="tools" aria-pressed="false">Tooling</button>
     </div>
-    <div class="system-readout"><p class="system-stack">Java · Go · Spring</p><p class="system-description">The systems behind procurement.</p></div>
+    <div class="system-readout">
+      <div class="scene-heading"><span>I build</span><span class="scene-rotator" data-anim="rotator"><span class="scene-word" data-anim="rotator-word">backend systems</span></span><span class="scene-caret" data-anim="caret" aria-hidden="true">|</span></div>
+      <p class="system-stack" data-anim="toolgrid">Java · Go · Spring</p>
+      <p class="system-description" data-anim="agent-card">The systems behind procurement.</p>
+      <ul class="scene-checklist" data-anim="checklist"><li>Order integrations</li><li>Resource management</li><li>Warehouse systems</li></ul>
+      <p class="scene-call" data-anim="call-pill"><span aria-hidden="true">↳</span> Connect services. Keep operations moving.</p>
+    </div>
     <div class="system-hint"><span id="workspace-instructions">Drag to rotate <span aria-hidden="true">↔</span></span><div class="workspace-actions"><button type="button" class="core-reset">Reset view</button><button type="button" class="core-pause" aria-pressed="false">Pause motion</button></div></div>
   </div>
   <details class="system-demo"><summary><span><span class="accent" aria-hidden="true">&gt;_</span> Try the action preview</span><span class="demo-open-icon" aria-hidden="true">+</span></summary>
@@ -988,122 +1056,182 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   document.addEventListener('click', function (event) { if (!event.target.closest('.stat')) stats.forEach(dismissReceipt); });
   document.addEventListener('keydown', function (event) { if (event.key === 'Escape') stats.forEach(dismissReceipt); });
 
-  // CSS supplies the idle animation; direct input keeps a precise, persistent view.
-  // Touch uses only horizontal movement so a vertical swipe still scrolls the page.
+  // Hover follows the pointer with a small eased tilt. Dragging separates the
+  // display layers and carries real angular velocity into a damped release.
+  // The frame loop exists only while a view is changing, and touch keeps pan-y.
   function initSystemCore() {
     var art = document.getElementById('system-art');
     if (!art) return;
     var viewport = art.querySelector('.core-viewport');
     var rotation = art.querySelector('.workspace-rotation');
-    if (!viewport || !rotation) return;
-    var modes = ['backend', 'ai', 'tools'];
-    var copy = {
-      backend: ['Java · Go · Spring', 'The systems behind procurement.'],
-      ai: ['Agent tools · Evaluation harnesses', 'Make the next action inspectable.'],
-      tools: ['CLI workflows · Git · Observability', 'Tools for the people running the systems.']
-    };
-    var buttons = Array.from(art.querySelectorAll('[data-core-mode]'));
-    var readout = art.querySelector('.system-readout');
-    var visible = false, engaged = false, timer = 0;
-    var manual = false, running = false, drag = null;
-    var viewX = -16, viewY = -26;
-    function setMode(mode) {
-      art.dataset.mode = mode;
-      buttons.forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.coreMode === mode)); });
-      art.querySelector('.system-index').textContent = '0' + (modes.indexOf(mode) + 1) + ' / 03';
-      art.querySelector('.system-stack').textContent = copy[mode][0];
-      art.querySelector('.system-description').textContent = copy[mode][1];
-      readout.classList.remove('is-changing');
-      if (!paused) { void readout.offsetWidth; readout.classList.add('is-changing'); }
-    }
-    function cycle() {
-      clearTimeout(timer); timer = 0;
-      if (!running || engaged || manual) return;
-      timer = setTimeout(function () {
-        setMode(modes[(modes.indexOf(art.dataset.mode) + 1) % modes.length]);
-        cycle();
-      }, 8000);
+    var hero = document.getElementById('home');
+    var controls = art.closest('.hero-system') || art;
+    if (!viewport || !rotation || !hero) return;
+    var visible = false, running = false, drag = null, frame = 0, lastFrame = 0;
+    var viewX = 0, viewY = 0, targetX = 0, targetY = 0, fan = 1;
+    var velocityX = 0, velocityY = 0, coasting = false, viewNoticePending = false;
+    function notifyView() {
+      if (viewNoticePending) return;
+      viewNoticePending = true;
+      queueMicrotask(function () {
+        viewNoticePending = false;
+        document.dispatchEvent(new CustomEvent('workspace-view'));
+      });
     }
     function setView(x, y) {
-      viewX = Math.max(-42, Math.min(24, x));
-      viewY = y;
-      rotation.style.setProperty('--view-x', viewX + 'deg');
-      rotation.style.setProperty('--view-y', viewY + 'deg');
+      viewX = x; viewY = y;
+      rotation.style.setProperty('--view-x', x.toFixed(3) + 'deg');
+      rotation.style.setProperty('--view-y', y.toFixed(3) + 'deg');
       art.classList.add('is-manipulated');
+      notifyView();
+    }
+    function setFan(value) {
+      fan = value;
+      rotation.style.setProperty('--fan', value.toFixed(3));
+      notifyView();
+    }
+    function stopFrame() {
+      cancelAnimationFrame(frame); frame = 0; lastFrame = 0;
+    }
+    function requestFrame() {
+      if (running && !frame) frame = requestAnimationFrame(step);
+    }
+    function step(now) {
+      frame = 0;
+      if (!running) return;
+      var dt = lastFrame ? Math.min(40, now - lastFrame) : 16;
+      lastFrame = now;
+      if (!drag) {
+        if (coasting) {
+          setView(viewX + velocityX * dt, viewY + velocityY * dt);
+          var friction = Math.exp(-dt / 210);
+          velocityX *= friction; velocityY *= friction;
+          if (Math.hypot(velocityX, velocityY) < .009) {
+            coasting = false;
+            // A full revolution is the same view; choose the shortest return.
+            viewX = targetX + ((viewX - targetX + 180) % 360 + 360) % 360 - 180;
+            viewY = targetY + ((viewY - targetY + 180) % 360 + 360) % 360 - 180;
+          }
+        } else {
+          var ease = 1 - Math.exp(-dt / 180);
+          setView(viewX + (targetX - viewX) * ease, viewY + (targetY - viewY) * ease);
+        }
+        setFan(fan + (1 - fan) * (1 - Math.exp(-dt / 150)));
+      }
+      var moving = coasting || (!drag && (Math.abs(targetX - viewX) + Math.abs(targetY - viewY) > .025 || Math.abs(1 - fan) > .002));
+      if (moving) requestFrame();
+      else {
+        if (!drag) { setView(targetX, targetY); setFan(1); }
+        lastFrame = 0;
+      }
+    }
+    function hoverAt(event) {
+      if (paused || !finePointer.matches || event.pointerType === 'touch') return;
+      var rect = viewport.getBoundingClientRect();
+      var x = -(event.clientY - rect.top - rect.height / 2) / Math.max(150, rect.height * .65) * 20;
+      var y = (event.clientX - rect.left - rect.width / 2) / Math.max(150, rect.width * .65) * 20;
+      var magnitude = Math.hypot(x, y);
+      if (magnitude > 22) { x *= 22 / magnitude; y *= 22 / magnitude; }
+      targetX = x; targetY = y;
+      if (!drag && !coasting) requestFrame();
     }
     function endDrag(event) {
       if (!drag || (event && event.pointerId !== undefined && event.pointerId !== drag.id)) return;
-      var pointerId = drag.id;
+      var held = drag;
       drag = null;
       viewport.classList.remove('is-dragging');
-      try { if (viewport.hasPointerCapture(pointerId)) viewport.releasePointerCapture(pointerId); } catch (e) {}
+      try { if (viewport.hasPointerCapture(held.id)) viewport.releasePointerCapture(held.id); } catch (e) {}
+      var released = event && event.type === 'pointerup';
+      coasting = !!(released && running && performance.now() - held.lastTime < 100 && Math.hypot(velocityX, velocityY) > .025);
+      if (paused) {
+        // A deliberate drag is still available, but it stops exactly on release.
+        targetX = viewX; targetY = viewY;
+        velocityX = 0; velocityY = 0; setFan(1); stopFrame();
+      } else if (running) requestFrame();
+      else { coasting = false; velocityX = 0; velocityY = 0; setFan(1); stopFrame(); }
     }
     function resetView() {
-      endDrag();
-      viewX = -16; viewY = -26;
-      rotation.style.removeProperty('--view-x');
-      rotation.style.removeProperty('--view-y');
-      art.classList.remove('is-manipulated');
+      endDrag(); stopFrame();
+      velocityX = 0; velocityY = 0; coasting = false;
+      targetX = 0; targetY = 0;
+      if (running) requestFrame();
+      else { setView(0, 0); setFan(1); }
     }
     syncCoreMotion = function () {
       running = visible && !paused && !document.hidden;
       if (running) art.classList.add('has-started');
       art.classList.toggle('is-running', running);
-      if (document.hidden || !visible) endDrag();
+      if (!running) {
+        endDrag(); stopFrame(); coasting = false;
+        velocityX = 0; velocityY = 0;
+        targetX = 0; targetY = 0; setView(0, 0); setFan(1);
+      }
       var pauseButton = art.querySelector('.core-pause');
-      pauseButton.disabled = reduced.matches;
-      pauseButton.setAttribute('aria-pressed', String(paused));
-      pauseButton.textContent = reduced.matches ? 'Reduced motion' : (paused ? 'Resume motion' : 'Pause motion');
-      cycle();
+      if (pauseButton) {
+        pauseButton.disabled = reduced.matches;
+        pauseButton.setAttribute('aria-pressed', String(paused));
+        pauseButton.textContent = reduced.matches ? 'Reduced motion' : (paused ? 'Resume motion' : 'Pause motion');
+      }
     };
-    art.querySelector('.core-pause').addEventListener('click', function () { motionButton.click(); });
-    art.querySelector('.core-reset').addEventListener('click', resetView);
-    buttons.forEach(function (button) {
+    var pauseButton = art.querySelector('.core-pause');
+    var resetButton = art.querySelector('.core-reset');
+    if (pauseButton) pauseButton.addEventListener('click', function () { motionButton.click(); });
+    if (resetButton) resetButton.addEventListener('click', resetView);
+    art.querySelectorAll('[data-core-mode]').forEach(function (button) {
       button.addEventListener('click', function () {
-        manual = true;
-        setMode(button.dataset.coreMode);
-        cycle();
+        document.dispatchEvent(new CustomEvent('workspace-mode', { detail: button.dataset.coreMode }));
       });
     });
-    art.addEventListener('pointerenter', function () { engaged = true; cycle(); });
-    art.addEventListener('pointerleave', function () { engaged = art.contains(document.activeElement); cycle(); });
-    art.addEventListener('focusin', function () { engaged = true; cycle(); });
-    art.addEventListener('focusout', function (event) {
-      if (!art.contains(event.relatedTarget)) { engaged = finePointer.matches && art.matches(':hover'); cycle(); }
+    hero.addEventListener('pointermove', hoverAt);
+    hero.addEventListener('pointerleave', function () {
+      if (drag) return;
+      targetX = 0; targetY = 0;
+      if (!coasting) requestFrame();
     });
     viewport.addEventListener('pointerdown', function (event) {
       if (drag || event.isPrimary === false || event.button !== 0) return;
       if (event.target.closest('button, a, input, select, textarea')) return;
-      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, viewX: viewX, viewY: viewY, touch: event.pointerType === 'touch' };
-      if (!drag.touch) {
-        event.preventDefault();
-        viewport.focus({ preventScroll: true });
-        setView(viewX, viewY);
-      }
+      stopFrame(); coasting = false; velocityX = 0; velocityY = 0;
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, lastX: event.clientX, lastY: event.clientY, lastTime: performance.now(), viewX: viewX, viewY: viewY, touch: event.pointerType === 'touch' };
+      if (!drag.touch) event.preventDefault();
       viewport.classList.add('is-dragging');
+      setFan(paused ? 1 : 1.9);
       try { viewport.setPointerCapture(event.pointerId); } catch (e) { endDrag(); }
     });
     viewport.addEventListener('pointermove', function (event) {
       if (!drag || event.pointerId !== drag.id) return;
       var dx = event.clientX - drag.x, dy = event.clientY - drag.y;
       if (drag.touch && Math.abs(dx) < 5) return;
-      setView(drag.touch ? drag.viewX : drag.viewX - dy * .3, drag.viewY + dx * .4);
+      var now = performance.now(), dt = Math.max(8, now - drag.lastTime);
+      var vx = drag.touch ? 0 : -(event.clientY - drag.lastY) * .4 / dt;
+      var vy = (event.clientX - drag.lastX) * .4 / dt;
+      velocityX = Math.max(-.8, Math.min(.8, velocityX * .25 + vx * .75));
+      velocityY = Math.max(-.8, Math.min(.8, velocityY * .25 + vy * .75));
+      drag.lastX = event.clientX; drag.lastY = event.clientY; drag.lastTime = now;
+      setView(drag.touch ? drag.viewX : drag.viewX - dy * .4, drag.viewY + dx * .4);
     });
     viewport.addEventListener('pointerup', endDrag);
     viewport.addEventListener('pointercancel', endDrag);
     viewport.addEventListener('lostpointercapture', endDrag);
-    viewport.addEventListener('keydown', function (event) {
-      if (event.altKey || event.ctrlKey || event.metaKey) return;
-      var moves = { ArrowLeft: [0, -10], ArrowRight: [0, 10], ArrowUp: [10, 0], ArrowDown: [-10, 0] };
-      if (event.key === 'Home') { event.preventDefault(); resetView(); }
-      else if (moves[event.key]) {
-        event.preventDefault();
-        endDrag();
-        setView(viewX + moves[event.key][0], viewY + moves[event.key][1]);
-      }
+    function nudge(direction) {
+      var moves = { left: [0, -15], right: [0, 15], up: [15, 0], down: [-15, 0] };
+      if (!moves[direction]) return;
+      endDrag(); stopFrame(); coasting = false;
+      targetX = viewX + moves[direction][0]; targetY = viewY + moves[direction][1];
+      if (paused) setView(targetX, targetY); else requestFrame();
+    }
+    controls.querySelectorAll('[data-rotate]').forEach(function (button) {
+      button.addEventListener('click', function () { nudge(button.dataset.rotate); });
     });
-    addEventListener('blur', function () { endDrag(); });
+    controls.addEventListener('keydown', function (event) {
+      if (event.altKey || event.ctrlKey || event.metaKey || event.target.matches('input, textarea, select')) return;
+      var directions = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' };
+      if (event.key === 'Home') { event.preventDefault(); resetView(); }
+      else if (directions[event.key]) { event.preventDefault(); nudge(directions[event.key]); }
+    });
+    addEventListener('blur', function () { endDrag(); resetView(); });
     document.addEventListener('visibilitychange', syncCoreMotion);
+    setView(0, 0); setFan(1);
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
         visible = entries[0].isIntersecting;
@@ -1198,7 +1326,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     counter.style.minWidth = counter.getBoundingClientRect().width + 'px';
     counter.textContent = '0';
     function step(now) {
-      var progress = Math.min(1, (now - start) / 1400);
+      var progress = Math.min(1, (now - start) / 900);
       counter.textContent = paused ? target : Math.round(target * (1 - Math.pow(1 - progress, 4)));
       if (progress < 1 && !paused) requestAnimationFrame(step);
       else counter.style.minWidth = '';
@@ -1423,6 +1551,103 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   addEventListener('beforeprint', function () { printState = Array.from(document.querySelectorAll('.role, .project-challenge')).map(function (role) { var wasOpen = role.open; role.open = true; return wasOpen; }); });
   addEventListener('afterprint', function () { document.querySelectorAll('.role, .project-challenge').forEach(function (role, index) { role.open = printState[index]; }); });
   try { console.log('%cHi, fellow engineer. Press ` for a terminal, or ' + (isMac ? '⌘' : 'Ctrl') + '+K to jump around.', 'color:#c5f277;font-family:monospace'); } catch (e) {}
+})();
+
+(function () {
+  'use strict';
+  var hero = document.getElementById('home'), art = document.getElementById('system-art');
+  if (!hero || !art) return;
+  var root = document.documentElement, reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  var modes = ['backend', 'ai', 'tools'];
+  var scenes = {
+    backend: { word: 'backend systems', stack: 'Java · Go · Spring', description: 'The systems behind procurement.', items: ['Order integrations', 'Resource management', 'Warehouse systems'], call: 'Connect services. Keep operations moving.' },
+    ai: { word: 'agent tools', stack: 'Agent tools · Evaluation harnesses', description: 'Make the next action inspectable.', items: ['Agent tooling', 'Evaluation harnesses', 'Local inference'], call: 'Preview the action. Evaluate the outcome.' },
+    tools: { word: 'developer workflows', stack: 'CLI workflows · Git · Observability', description: 'Tools for the people running the systems.', items: ['CLI workflows', 'Guardrails', 'Observability'], call: 'Inspect the request. Understand the system.' }
+  };
+  var rotator = art.querySelector('.scene-rotator'), list = art.querySelector('.scene-checklist');
+  var current = 'backend', visible = true, manual = false, timer = 0, rollTimer = 0;
+  var trail = document.createElement('div');
+  trail.className = 'cursor-trail'; trail.dataset.anim = 'cursor-trail'; trail.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(trail);
+  function paused() { return reduce.matches || root.classList.contains('motion-paused'); }
+  function active() { return !paused() && visible && !document.hidden; }
+  function finishWord(word) {
+    clearTimeout(rollTimer);
+    rotator.getAnimations({ subtree: true }).forEach(function (animation) { animation.cancel(); });
+    var span = document.createElement('span'); span.className = 'scene-word'; span.dataset.anim = 'rotator-word'; span.textContent = word;
+    rotator.replaceChildren(span);
+    rotator.style.width = span.getBoundingClientRect().width + 'px';
+  }
+  function rollWord(word) {
+    if (!active()) { finishWord(word); return; }
+    clearTimeout(rollTimer);
+    var old = rotator.querySelector('.scene-word');
+    if (!old || rotator.children.length > 1) { finishWord(scenes[current].word); old = rotator.firstElementChild; }
+    var next = document.createElement('span'); next.className = 'scene-word'; next.dataset.anim = 'rotator-word'; next.textContent = word;
+    rotator.appendChild(next);
+    var width = next.getBoundingClientRect().width;
+    next.animate([{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], { duration: 550, easing: 'cubic-bezier(.3,0,.2,1)', fill: 'both' });
+    old.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-100%)' }], { duration: 550, easing: 'cubic-bezier(.3,0,.2,1)', fill: 'both' });
+    rotator.style.width = width + 'px';
+    rollTimer = setTimeout(function () { old.remove(); next.getAnimations().forEach(function (animation) { animation.cancel(); }); }, 570);
+  }
+  function showScene(mode, animate) {
+    var scene = scenes[mode]; if (!scene) return;
+    if (animate && mode !== current) rollWord(scene.word); else finishWord(scene.word);
+    current = mode; hero.dataset.scene = mode; art.dataset.mode = mode;
+    art.querySelector('.system-index').textContent = '0' + (modes.indexOf(mode) + 1) + ' / 03';
+    art.querySelectorAll('[data-core-mode]').forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.coreMode === mode)); });
+    art.querySelector('.system-stack').textContent = scene.stack;
+    art.querySelector('.system-description').textContent = scene.description;
+    art.querySelector('.scene-call').textContent = '↳ ' + scene.call;
+    list.replaceChildren.apply(list, scene.items.map(function (text, index) {
+      var li = document.createElement('li'); li.textContent = text;
+      if (animate && active()) li.animate([{ opacity: 0, transform: 'translateY(5px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 240, delay: index * 110, easing: 'ease-out', fill: 'both' });
+      return li;
+    }));
+  }
+  function schedule() {
+    clearTimeout(timer); timer = 0;
+    art.classList.toggle('scene-running', active());
+    if (!active()) {
+      trail.replaceChildren(); finishWord(scenes[current].word);
+      list.querySelectorAll('li').forEach(function (li) { li.getAnimations().forEach(function (animation) { animation.cancel(); }); });
+    }
+    if (active() && !manual) timer = setTimeout(function () { showScene(modes[(modes.indexOf(current) + 1) % modes.length], true); schedule(); }, 3500);
+  }
+  document.addEventListener('workspace-mode', function (event) { manual = true; showScene(event.detail, true); schedule(); });
+  document.addEventListener('visibilitychange', schedule);
+  new MutationObserver(schedule).observe(root, { attributes: true, attributeFilter: ['class'] });
+  reduce.addEventListener('change', schedule);
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (entries) { visible = entries[0].isIntersecting; schedule(); }, { threshold: 0 }).observe(hero);
+  hero.addEventListener('pointermove', function (event) {
+    if (!active() || event.pointerType !== 'mouse') return;
+    var dot = document.createElement('i'); dot.style.left = event.clientX + 'px'; dot.style.top = event.clientY + 'px'; trail.appendChild(dot);
+    if (trail.children.length > 40) trail.firstElementChild.remove();
+    setTimeout(function () { dot.remove(); }, 900);
+  }, { passive: true });
+
+  // Endpoints are measured from the rendered objects, including their 3D projection.
+  var stage = art.querySelector('.core-viewport'), svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.classList.add('system-wires'); svg.dataset.anim = 'wires'; svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false');
+  stage.insertBefore(svg, stage.firstChild);
+  var targets = Array.from(art.querySelectorAll('[data-anim="wire-target"]'));
+  var paths = targets.map(function () { var path = document.createElementNS(svg.namespaceURI, 'path'); path.dataset.anim = 'wire'; svg.appendChild(path); return path; });
+  function drawWires() {
+    var frame = stage.getBoundingClientRect(), from = art.querySelector('.laptop-screen').getBoundingClientRect();
+    svg.setAttribute('viewBox', '0 0 ' + frame.width + ' ' + frame.height);
+    targets.forEach(function (target, index) {
+      var box = target.getBoundingClientRect(), tx = box.left + box.width / 2 - frame.left, ty = box.top + box.height / 2 - frame.top;
+      var x = Math.max(from.left - frame.left, Math.min(from.right - frame.left, tx));
+      var y = Math.max(from.top - frame.top, Math.min(from.bottom - frame.top, ty));
+      paths[index].setAttribute('d', 'M' + x + ',' + y + ' C' + x + ',' + (y + 15) + ' ' + tx + ',' + (ty + 15) + ' ' + tx + ',' + ty);
+    });
+  }
+  document.addEventListener('workspace-view', drawWires);
+  addEventListener('resize', drawWires, { passive: true });
+  if ('ResizeObserver' in window) new ResizeObserver(drawWires).observe(stage);
+  if (document.fonts) document.fonts.ready.then(function () { finishWord(scenes[current].word); drawWires(); });
+  showScene('backend', false); schedule(); drawWires();
 })();
 
 </script>
