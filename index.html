@@ -179,6 +179,94 @@
     @media(prefers-reduced-motion:reduce){.demo-caret,.terminal-hint>span:first-child{animation:none}.receipt{transition:none}}
     @media print{.hero-demo,.terminal-hint,.section-watermark,.receipt{display:none!important}.hero-layout{display:block}.stat-trigger{border:0;color:var(--text)}}
     @media(max-width:380px){.hero-location{font-size:11px;letter-spacing:.08em;gap:8px}.hero-location::before{flex:0 0 20px}.featured-visual .card-proof{flex-direction:column;align-items:flex-start;gap:8px}.featured-visual .proof-label{width:100%;max-width:none;font-size:11px}.featured-visual .proof-scope{max-width:none}}
+
+    /* Reference-inspired layered core. All surfaces are inline vectors; no 3D runtime. */
+    .hero-layout{gap:clamp(24px,4vw,64px)}
+    .hero-canvas{opacity:.32}
+    .hero-system{width:100%;max-width:520px;justify-self:end;min-width:0}
+    .system-art{position:relative;isolation:isolate;--core-accent:#c5f277}
+    .system-kicker{display:flex;align-items:center;gap:9px;color:var(--muted);font:10px/1.6 var(--mono);letter-spacing:.12em;padding:0 12px}
+    .system-led{width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+    .system-index{margin-left:auto;font-size:9px;letter-spacing:.06em}
+    .core-viewport{position:relative;height:390px;overflow:hidden;overflow:clip}
+    .core-defs{position:absolute}
+    .core-halo{position:absolute;inset:35px 10px 0;background:radial-gradient(ellipse,rgba(166,219,101,.19),rgba(134,206,103,.04) 50%,transparent 72%);pointer-events:none}
+    .core-grid{position:absolute;inset:22px 0 0;background-image:radial-gradient(var(--muted) .65px,transparent .8px);background-size:9px 9px;opacity:.18;mask-image:radial-gradient(ellipse,#000,transparent 68%);-webkit-mask-image:radial-gradient(ellipse,#000,transparent 68%)}
+    .core-perspective{position:absolute;inset:0;perspective:950px;perspective-origin:50% 42%;pointer-events:none}
+    .core-pointer,.core-float,.core-stack{position:absolute;width:220px;height:260px;transform-style:preserve-3d}
+    .core-pointer{left:50%;top:46%;margin-left:-110px;margin-top:-130px;transform:rotateX(var(--pointer-x,0deg)) rotateY(var(--pointer-y,0deg));transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+    .core-float{transform:translateY(0)}
+    .core-stack{transform:rotateX(-12deg) rotateY(-28deg) rotateZ(-3deg)}
+    .core-layer{position:absolute;inset:0;transform-style:preserve-3d;transform:translateZ(var(--z))}
+    .core-face{position:absolute;inset:0;width:220px;height:260px;overflow:visible;backface-visibility:visible;transform:translateZ(2px)}
+    .core-edge{transform:translateZ(-2px);filter:brightness(.48)}
+    .core-glass .core-face{filter:drop-shadow(0 0 3px rgba(178,240,122,.16))}
+    .core-glass .core-edge{filter:brightness(.55)}
+    .core-heart{position:absolute;inset:68px 52px 60px;display:grid;place-content:center;background:linear-gradient(145deg,rgba(209,255,167,.55),rgba(79,122,61,.32));border:1px solid #bfdba0;border-radius:9px;box-shadow:0 0 30px rgba(197,242,119,.22),inset 0 0 24px rgba(197,242,119,.24);transform:translateZ(0);color:#f1ffd8;text-shadow:0 0 20px rgba(197,242,119,.7)}
+    .core-heart>span{font:500 74px/1 var(--display);letter-spacing:-.09em;padding-right:8px;transform:translateZ(1px)}
+    .core-heart>span>span{color:#c5f277}
+    .core-heart i{position:absolute;bottom:14px;left:calc(50% - 15px);width:30px;height:2px;background:#d6ffaf;box-shadow:0 0 10px #c5f277}
+    .core-shadow{position:absolute;left:25%;right:25%;bottom:25px;height:22px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.4),transparent 68%);filter:blur(8px)}
+    .core-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;fill:var(--line);stroke:var(--line);stroke-width:1}
+    .core-wires path{fill:none;stroke-dasharray:4 5}
+    .core-node{position:absolute;font:8px/1.5 var(--mono);letter-spacing:.09em;color:var(--muted);transition:color .5s;white-space:nowrap}
+    .core-node-backend{left:1%;top:21%}.core-node-ai{right:1%;top:27%}.core-node-tools{right:2%;bottom:25%}
+    [data-mode=backend] .core-node-backend,[data-mode=ai] .core-node-ai,[data-mode=tools] .core-node-tools{color:var(--accent)}
+    [data-mode=backend] .wire-backend,[data-mode=ai] .wire-ai,[data-mode=tools] .wire-tools{stroke:var(--accent)}
+    .system-modes{display:flex;justify-content:center;gap:6px}
+    .system-modes button{min-height:44px;padding:8px 15px;border:1px solid transparent;background:transparent;border-radius:6px;color:var(--muted);font:11px/1.5 var(--mono);transition:background .2s,border-color .2s,color .2s}
+    .system-modes button:hover{color:var(--text);border-color:var(--line)}
+    .system-modes button[aria-pressed=true]{color:var(--accent);border-color:var(--line);background:var(--accent-soft)}
+    .system-readout{text-align:center;min-height:70px;padding:15px 8px 0}
+    .system-stack{font:12px/1.7 var(--mono);color:var(--text)}
+    .system-description{font-size:12px;color:var(--muted);margin-top:3px}
+    .system-readout.is-changing{animation:system-copy-in .5s ease both}
+    .system-hint{display:flex;justify-content:center;gap:8px;font:9px/1.6 var(--mono);color:var(--muted);padding:4px 0 22px}
+    .core-touch-hint{display:none}
+    .system-demo{border-top:1px solid var(--line)}
+    .system-demo>summary{min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 12px;list-style:none;font:11px/1.6 var(--mono);color:var(--muted);transition:color .2s}
+    .system-demo>summary::-webkit-details-marker{display:none}
+    .system-demo>summary .accent{margin-right:8px}
+    .system-demo>summary:hover,.system-demo[open]>summary{color:var(--text)}
+    .demo-open-icon{font:22px/1 var(--display);transition:transform .25s}
+    .system-demo[open] .demo-open-icon{transform:rotate(45deg)}
+    .system-demo .hero-demo{max-width:none;margin-bottom:12px}
+    .js-motion .system-art.is-running .core-stack{animation:core-turn 24s cubic-bezier(.45,0,.2,1) infinite}
+    .js-motion .system-art.is-running .core-float{animation:core-float 6s ease-in-out infinite}
+    .js-motion .system-art.is-running .core-layer{animation:core-open 24s cubic-bezier(.45,0,.2,1) infinite}
+    .js-motion .system-art.is-running .core-wires path{animation:core-signal 3s linear infinite}
+    .js-motion .system-art.is-running .core-shadow{animation:core-shadow 6s ease-in-out infinite}
+    /* Keep timelines at their current frame when hidden, offscreen or explicitly paused. */
+    .system-art.has-started .core-stack{animation:core-turn 24s cubic-bezier(.45,0,.2,1) infinite paused}
+    .system-art.has-started .core-float{animation:core-float 6s ease-in-out infinite paused}
+    .system-art.has-started .core-layer{animation:core-open 24s cubic-bezier(.45,0,.2,1) infinite paused}
+    .system-art.has-started .core-wires path{animation:core-signal 3s linear infinite paused}
+    .system-art.has-started .core-shadow{animation:core-shadow 6s ease-in-out infinite paused}
+    @keyframes core-turn{0%{transform:rotateX(-12deg) rotateY(-28deg) rotateZ(-3deg)}30%{transform:rotateX(8deg) rotateY(28deg) rotateZ(2deg)}44%{transform:rotateX(-8deg) rotateY(48deg) rotateZ(-2deg)}60%{transform:rotateX(10deg) rotateY(210deg) rotateZ(3deg)}78%,100%{transform:rotateX(-12deg) rotateY(332deg) rotateZ(-3deg)}}
+    @keyframes core-open{0%,26%,78%,100%{transform:translateZ(var(--z))}45%,60%{transform:translateZ(calc(var(--z) * 1.6))}}
+    @keyframes core-float{50%{transform:translateY(-9px)}}
+    @keyframes core-signal{to{stroke-dashoffset:-36}}
+    @keyframes core-shadow{50%{transform:scale(.85);opacity:.55}}
+    @keyframes system-copy-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+    [data-theme=light] .core-halo{background:radial-gradient(ellipse,rgba(123,179,70,.21),rgba(134,206,103,.06) 50%,transparent 72%)}
+    [data-theme=light] .core-grid{opacity:.21}
+    [data-theme=light] .core-heart{color:#243919;text-shadow:none}
+    [data-theme=light] .core-heart>span>span{color:#456516}
+    @media(min-width:1800px){.hero-system{max-width:560px}.core-viewport{height:440px}.core-pointer{scale:1.12}}
+    @media(min-width:900px) and (max-width:1100px){.core-pointer{scale:.88}.core-node{font-size:7px}.system-modes button{padding-inline:11px}.core-viewport{height:360px}}
+    @media(max-width:899px){.hero-system{justify-self:center;max-width:520px}.hero-layout{gap:44px}.core-viewport{height:390px}}
+    @media(max-width:760px){.hero-layout{gap:36px}.system-kicker{padding-inline:0}.core-viewport{height:340px}.core-pointer{scale:.85}.core-node{font-size:7px}.system-modes button{padding-inline:12px}.system-hint{padding-bottom:14px}.system-demo>summary{padding-inline:4px}.hero-system .demo-head .terminal-dots{display:none}}
+    @media(max-width:380px){.core-viewport{height:300px}.core-pointer{scale:.72}.core-node{font-size:6px;letter-spacing:.03em}.system-kicker{font-size:9px}.system-modes{gap:2px}.system-modes button{padding-inline:10px;font-size:10px}.system-stack{font-size:11px}.system-description{font-size:11px}}
+    @media(hover:none),(pointer:coarse){.core-pointer-hint{display:none}.core-touch-hint{display:inline}}
+    .motion-paused .core-pointer{transform:none;transition:none}.motion-paused .system-readout{animation:none}
+    .motion-paused .core-pointer-hint{display:none}.motion-paused .core-touch-hint{display:inline}
+    @media(prefers-reduced-motion:reduce){.core-pointer{transform:none;transition:none}.core-pointer-hint{display:none}.core-touch-hint{display:inline}}
+    @media print{.hero-system{display:none!important}}
+
+    .system-hint{justify-content:space-between;align-items:center;padding:0 12px 8px;gap:12px;font-size:9px}
+    .core-pause{min-height:44px;padding:8px 0 8px 12px;background:transparent;color:var(--muted);font:10px/1.5 var(--mono);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px;transition:color .2s}
+    .core-pause:hover{color:var(--accent)}.core-pause:disabled{opacity:.7;text-decoration:none}
+    @media(max-width:380px){.system-hint{padding-inline:0;font-size:8px}.core-pause{font-size:9px}}
   </style>
 <!-- Embedded font licenses
 Copyright 2020 The Space Grotesk Project Authors (https://github.com/floriankarsten/space-grotesk)
@@ -396,7 +484,95 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
             <div class="hero-actions"><a class="button primary magnetic" href="#work"><span class="button-inner">Explore my work <svg aria-hidden="true"><use href="#arrow-down"/></svg></span></a><a class="button resume-link" href="#contact"><span class="button-inner">Download résumé <svg aria-hidden="true"><use href="#arrow-down"/></svg></span></a></div>
             <p class="hero-note"><span>Currently at <b>ByteDance</b></span><span aria-hidden="true">/</span><span>Previously <b>Dealshare</b></span></p>
           </div>
-          <div class="hero-demo" id="hero-demo" role="group" tabindex="0" aria-labelledby="demo-title" aria-describedby="demo-summary demo-caption">
+<div class="hero-system">
+  <div class="system-art" id="system-art" data-mode="backend">
+    <div class="system-kicker"><span class="system-led" aria-hidden="true"></span> SYSTEMS, CONNECTED <span class="system-index" aria-hidden="true">01 / 03</span></div>
+    <div class="core-viewport" aria-hidden="true">
+      <svg class="core-defs" width="0" height="0" focusable="false"><defs>
+        <linearGradient id="core-metal" x1="0" y1="0" x2="1" y2=".8"><stop stop-color="#f5f6ee"/><stop offset=".28" stop-color="#a4afa0"/><stop offset=".48" stop-color="#e5e9dc"/><stop offset=".73" stop-color="#879780"/><stop offset="1" stop-color="#dce6cf"/></linearGradient>
+        <linearGradient id="core-glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dcffba" stop-opacity=".78"/><stop offset=".3" stop-color="#749d4b" stop-opacity=".22"/><stop offset=".6" stop-color="#bce77b" stop-opacity=".52"/><stop offset="1" stop-color="#294934" stop-opacity=".84"/></linearGradient>
+      </defs></svg>
+      <div class="core-halo"></div><div class="core-grid"></div>
+      <svg class="core-wires" viewBox="0 0 500 390" preserveAspectRatio="none" focusable="false"><path class="wire-backend" d="M54 105H110L190 163"/><path class="wire-ai" d="M444 128H390L310 178"/><path class="wire-tools" d="M428 298H356L298 236"/><circle class="wire-backend" cx="54" cy="105" r="3"/><circle class="wire-ai" cx="444" cy="128" r="3"/><circle class="wire-tools" cx="428" cy="298" r="3"/></svg>
+      <span class="core-node core-node-backend">01 / BACKEND</span><span class="core-node core-node-ai">02 / APPLIED AI</span><span class="core-node core-node-tools">03 / TOOLING</span>
+      <div class="core-shadow"></div>
+      <div class="core-perspective"><div class="core-pointer"><div class="core-float"><div class="core-stack">
+      <div class="core-layer core-shell" style="--z:-54px"><svg viewBox="0 0 220 260" class="core-face core-edge" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-metal)" fill-rule="evenodd" stroke="#e0e6d7" stroke-opacity=".6" stroke-width="1"/>
+    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#252e20" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#65705b" stroke-opacity=".55"/>
+    <g fill="#5b6553"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
+    <text x="43" y="36" font-family="monospace" font-size="8" letter-spacing="2" fill="#394530">GR / SYSTEMS</text><text x="51" y="239" font-family="monospace" font-size="7" letter-spacing="3" fill="#394530">BUILD · INSPECT</text></svg><svg viewBox="0 0 220 260" class="core-face" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-metal)" fill-rule="evenodd" stroke="#e0e6d7" stroke-opacity=".6" stroke-width="1"/>
+    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#252e20" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#65705b" stroke-opacity=".55"/>
+    <g fill="#5b6553"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
+    <text x="43" y="36" font-family="monospace" font-size="8" letter-spacing="2" fill="#394530">GR / SYSTEMS</text><text x="51" y="239" font-family="monospace" font-size="7" letter-spacing="3" fill="#394530">BUILD · INSPECT</text></svg></div>
+<div class="core-layer core-glass" style="--z:-36px"><svg viewBox="0 0 220 260" class="core-face core-edge" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
+    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
+    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
+    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg><svg viewBox="0 0 220 260" class="core-face" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
+    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
+    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
+    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg></div>
+<div class="core-layer core-glass" style="--z:-18px"><svg viewBox="0 0 220 260" class="core-face core-edge" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
+    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
+    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
+    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg><svg viewBox="0 0 220 260" class="core-face" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
+    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
+    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
+    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg></div>
+<div class="core-layer core-glass" style="--z:0px"><svg viewBox="0 0 220 260" class="core-face core-edge" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
+    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
+    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
+    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg><svg viewBox="0 0 220 260" class="core-face" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
+    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
+    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
+    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg></div>
+<div class="core-layer core-glass" style="--z:18px"><svg viewBox="0 0 220 260" class="core-face core-edge" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
+    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
+    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
+    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg><svg viewBox="0 0 220 260" class="core-face" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
+    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
+    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
+    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg></div>
+<div class="core-layer core-glass" style="--z:36px"><svg viewBox="0 0 220 260" class="core-face core-edge" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
+    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
+    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
+    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg><svg viewBox="0 0 220 260" class="core-face" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
+    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
+    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
+    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg></div>
+<div class="core-layer core-shell" style="--z:54px"><svg viewBox="0 0 220 260" class="core-face core-edge" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-metal)" fill-rule="evenodd" stroke="#e0e6d7" stroke-opacity=".6" stroke-width="1"/>
+    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#252e20" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#65705b" stroke-opacity=".55"/>
+    <g fill="#5b6553"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
+    <text x="43" y="36" font-family="monospace" font-size="8" letter-spacing="2" fill="#394530">GR / SYSTEMS</text><text x="51" y="239" font-family="monospace" font-size="7" letter-spacing="3" fill="#394530">BUILD · INSPECT</text></svg><svg viewBox="0 0 220 260" class="core-face" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-metal)" fill-rule="evenodd" stroke="#e0e6d7" stroke-opacity=".6" stroke-width="1"/>
+    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#252e20" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#65705b" stroke-opacity=".55"/>
+    <g fill="#5b6553"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
+    <text x="43" y="36" font-family="monospace" font-size="8" letter-spacing="2" fill="#394530">GR / SYSTEMS</text><text x="51" y="239" font-family="monospace" font-size="7" letter-spacing="3" fill="#394530">BUILD · INSPECT</text></svg></div>
+      <div class="core-heart"><span>g<span>.</span></span><i></i></div>
+      </div></div></div></div>
+    </div>
+    <div class="system-modes" role="group" aria-label="Explore areas of work">
+      <button type="button" data-core-mode="backend" aria-pressed="true">Backend</button>
+      <button type="button" data-core-mode="ai" aria-pressed="false">Applied AI</button>
+      <button type="button" data-core-mode="tools" aria-pressed="false">Tooling</button>
+    </div>
+    <div class="system-readout"><p class="system-stack">Java · Go · Spring</p><p class="system-description">The systems behind procurement.</p></div>
+    <div class="system-hint"><span><span class="core-pointer-hint">Move your cursor to explore ↗</span><span class="core-touch-hint">Select an area to explore</span></span><button type="button" class="core-pause" aria-pressed="false">Pause motion</button></div>
+  </div>
+  <details class="system-demo"><summary><span><span class="accent" aria-hidden="true">&gt;_</span> Try the action preview</span><span class="demo-open-icon" aria-hidden="true">+</span></summary>
+            <div class="hero-demo" id="hero-demo" role="group" tabindex="0" aria-labelledby="demo-title" aria-describedby="demo-summary demo-caption">
             <div class="demo-head"><span class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></span><h2 id="demo-title">Preview before execute</h2><span class="demo-badge">SANDBOX</span></div>
             <p id="demo-summary" class="sr-only">Illustrative purchase-order cancellation. Inspect the simulated preview, then acknowledge or abort. With the panel focused, press Y or N.</p>
             <div class="demo-body">
@@ -408,6 +584,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
             <p class="demo-caption" id="demo-caption">Simulated. Not connected to anything.</p>
             <p class="sr-only" id="demo-announcement" role="status"></p>
           </div>
+
+  </details>
+</div>
 
         </div>
         <div class="hero-bottom"><div class="hero-tags"><span>DISTRIBUTED SYSTEMS</span><span>AGENT ENGINEERING</span><span>PROCUREMENT</span></div><button class="terminal-hint" type="button"><span aria-hidden="true">&gt;_</span><span><kbd>`</kbd> opens a terminal</span></button><a class="scroll-cue" href="#impact" aria-label="Scroll to impact numbers"><span>A few numbers first</span> <svg aria-hidden="true"><use href="#arrow-down"/></svg></a></div>
@@ -480,6 +659,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   var userPaused = false;
   var repaintCanvas = null;
   var syncDemoMotion = function () {};
+  var syncCoreMotion = function () {};
   try { userPaused = localStorage.getItem('gr-motion-paused') === 'true'; } catch (e) {}
   function store(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
   function syncTheme() {
@@ -856,6 +1036,92 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   document.addEventListener('click', function (event) { if (!event.target.closest('.stat')) stats.forEach(dismissReceipt); });
   document.addEventListener('keydown', function (event) { if (event.key === 'Escape') stats.forEach(dismissReceipt); });
 
+  // Lightweight vector surfaces use CSS 3D transforms. No WebGL or assets to load.
+  // The same control governs pointer movement, mode cycling and CSS timelines.
+  function initSystemCore() {
+    var art = document.getElementById('system-art');
+    if (!art) return;
+    var modes = ['backend', 'ai', 'tools'];
+    var copy = {
+      backend: ['Java · Go · Spring', 'The systems behind procurement.'],
+      ai: ['Agent tools · Evaluation harnesses', 'Make the next action inspectable.'],
+      tools: ['CLI workflows · Git · Observability', 'Tools for the people running the systems.']
+    };
+    var buttons = Array.from(art.querySelectorAll('[data-core-mode]'));
+    var pointer = art.querySelector('.core-pointer');
+    var readout = art.querySelector('.system-readout');
+    var visible = false, engaged = false, timer = 0, pointerFrame = 0;
+    var manual = false, running = false;
+    function setMode(mode) {
+      art.dataset.mode = mode;
+      buttons.forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.coreMode === mode)); });
+      art.querySelector('.system-index').textContent = '0' + (modes.indexOf(mode) + 1) + ' / 03';
+      art.querySelector('.system-stack').textContent = copy[mode][0];
+      art.querySelector('.system-description').textContent = copy[mode][1];
+      readout.classList.remove('is-changing');
+      if (!paused) { void readout.offsetWidth; readout.classList.add('is-changing'); }
+    }
+    function cycle() {
+      clearTimeout(timer); timer = 0;
+      if (!running || engaged || manual) return;
+      timer = setTimeout(function () {
+        setMode(modes[(modes.indexOf(art.dataset.mode) + 1) % modes.length]);
+        cycle();
+      }, 8000);
+    }
+    function resetPointer() {
+      cancelAnimationFrame(pointerFrame); pointerFrame = 0;
+      pointer.style.removeProperty('--pointer-x');
+      pointer.style.removeProperty('--pointer-y');
+    }
+    syncCoreMotion = function () {
+      running = visible && !paused && !document.hidden;
+      if (running) art.classList.add('has-started');
+      art.classList.toggle('is-running', running);
+      if (!running) resetPointer();
+      var pauseButton = art.querySelector('.core-pause');
+      pauseButton.disabled = reduced.matches;
+      pauseButton.setAttribute('aria-pressed', String(paused));
+      pauseButton.textContent = reduced.matches ? 'Reduced motion' : (paused ? 'Resume motion' : 'Pause motion');
+      cycle();
+    };
+    art.querySelector('.core-pause').addEventListener('click', function () { motionButton.click(); });
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        manual = true;
+        setMode(button.dataset.coreMode);
+        cycle();
+      });
+    });
+    art.addEventListener('pointerenter', function () { engaged = true; cycle(); });
+    art.addEventListener('pointerleave', function () { engaged = art.contains(document.activeElement); resetPointer(); cycle(); });
+    art.addEventListener('focusin', function () { engaged = true; cycle(); });
+    art.addEventListener('focusout', function (event) {
+      if (!art.contains(event.relatedTarget)) { engaged = finePointer.matches && art.matches(':hover'); cycle(); }
+    });
+    art.addEventListener('pointermove', function (event) {
+      if (!running || !finePointer.matches) return;
+      cancelAnimationFrame(pointerFrame);
+      pointerFrame = requestAnimationFrame(function () {
+        pointerFrame = 0;
+        if (!running) return;
+        var rect = art.getBoundingClientRect();
+        var x = Math.max(-.5, Math.min(.5, (event.clientX - rect.left) / rect.width - .5));
+        var y = Math.max(-.5, Math.min(.5, (event.clientY - rect.top) / rect.height - .5));
+        pointer.style.setProperty('--pointer-x', -y * 16 + 'deg');
+        pointer.style.setProperty('--pointer-y', x * 26 + 'deg');
+      });
+    });
+    document.addEventListener('visibilitychange', syncCoreMotion);
+    finePointer.addEventListener('change', resetPointer);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        visible = entries[0].isIntersecting;
+        syncCoreMotion();
+      }, { threshold: .1 }).observe(art);
+    } else { visible = true; }
+  }
+
   // This is an isolated, invented order: no network calls or real mutations.
   // Automatic playback defaults to abort; acknowledgement is always deliberate.
   function initDemo() {
@@ -866,7 +1132,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     var announcement = document.getElementById('demo-announcement');
     var fullCommand = 'procure po cancel PO-000123';
     var timer = 0, state = 'awaiting', character = 0, automaticOutcome = false;
-    var visible = panel.getBoundingClientRect().top < innerHeight;
+    var demoDisclosure = panel.closest('details');
+    var visible = (!demoDisclosure || demoDisclosure.open) && panel.getBoundingClientRect().top < innerHeight;
     var choices = Array.from(panel.querySelectorAll('[data-demo=yes],[data-demo=no]'));
     panel.querySelector('.demo-controls').hidden = false;
     function engaged() { return panel.matches(':hover') || panel.contains(document.activeElement); }
@@ -920,8 +1187,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     syncDemoMotion = function () {
       clear();
       if (paused) { if (state !== 'done') awaiting(); }
-      else if (visible && !document.hidden && !engaged()) start();
+      else if (visible && (!demoDisclosure || demoDisclosure.open) && !document.hidden && !engaged()) start();
     };
+    if (demoDisclosure) demoDisclosure.addEventListener('toggle', function () {
+      visible = demoDisclosure.open && panel.getBoundingClientRect().top < innerHeight;
+      syncDemoMotion(); refreshLayout();
+    });
     if ('IntersectionObserver' in window) new IntersectionObserver(function (entries) { visible = entries[0].isIntersecting; syncDemoMotion(); }, { threshold: .15 }).observe(panel);
     document.addEventListener('visibilitychange', syncDemoMotion);
     awaiting();
@@ -954,6 +1225,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     root.classList.toggle('motion-paused', paused);
     root.classList.toggle('js-motion', !paused);
     syncDemoMotion();
+    syncCoreMotion();
     motionButton.disabled = reduced.matches;
     motionButton.setAttribute('aria-pressed', String(paused));
     motionButton.textContent = reduced.matches ? 'Reduced motion enabled' : (userPaused ? 'Resume motion' : 'Pause motion');
@@ -1154,6 +1426,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   }
   if (!('IntersectionObserver' in window)) document.querySelectorAll('.reveal').forEach(function (element) { element.classList.add('is-visible'); });
   initDemo();
+  initSystemCore();
   syncMotion();
   // Print the complete timeline while retaining each disclosure's on-screen state.
   var printState = [];

@@ -27,8 +27,13 @@ Edit `index.html` directly. It is the website source in this repository.
 
 The page supports dark/light themes, reduced-motion preferences, mobile
 navigation, an interactive project timeline, source notes for impact numbers,
-and a command palette (`Cmd/Ctrl+K`). Its hero demo is a simulation with no
-backend connection.
+and a command palette (`Cmd/Ctrl+K`). The hero has a layered glass-and-metal
+core built with inline SVG and CSS 3D transforms: cursor tilt, a slow rotating
+and expanding stack, and selectable Backend / Applied AI / Tooling connections.
+Motion stops offscreen or in a hidden tab and follows both the nearby pause
+control and the device's reduced-motion setting. It uses no external 3D library.
+The expandable action preview beneath the core is a simulation with no backend
+connection.
 
 The résumé is embedded once as a base64 data URL in the contact download link.
 When changing the PDF, update both that embedded copy and `GauravRuhelaCV.pdf`.
