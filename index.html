@@ -180,93 +180,95 @@
     @media print{.hero-demo,.terminal-hint,.section-watermark,.receipt{display:none!important}.hero-layout{display:block}.stat-trigger{border:0;color:var(--text)}}
     @media(max-width:380px){.hero-location{font-size:11px;letter-spacing:.08em;gap:8px}.hero-location::before{flex:0 0 20px}.featured-visual .card-proof{flex-direction:column;align-items:flex-start;gap:8px}.featured-visual .proof-label{width:100%;max-width:none;font-size:11px}.featured-visual .proof-scope{max-width:none}}
 
-    /* Reference-inspired layered core. All surfaces are inline vectors; no 3D runtime. */
-    .hero-layout{gap:clamp(24px,4vw,64px)}
-    .hero-canvas{opacity:.32}
+    /* A miniature developer workspace, rendered entirely with CSS and inline SVG. */
+    .hero-layout{gap:clamp(24px,4vw,64px)}.hero-canvas{opacity:.25}
     .hero-system{width:100%;max-width:520px;justify-self:end;min-width:0}
-    .system-art{position:relative;isolation:isolate;--core-accent:#c5f277}
+    .system-art{position:relative;isolation:isolate}
     .system-kicker{display:flex;align-items:center;gap:9px;color:var(--muted);font:10px/1.6 var(--mono);letter-spacing:.12em;padding:0 12px}
     .system-led{width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
     .system-index{margin-left:auto;font-size:9px;letter-spacing:.06em}
-    .core-viewport{position:relative;height:390px;overflow:hidden;overflow:clip}
-    .core-defs{position:absolute}
-    .core-halo{position:absolute;inset:35px 10px 0;background:radial-gradient(ellipse,rgba(166,219,101,.19),rgba(134,206,103,.04) 50%,transparent 72%);pointer-events:none}
-    .core-grid{position:absolute;inset:22px 0 0;background-image:radial-gradient(var(--muted) .65px,transparent .8px);background-size:9px 9px;opacity:.18;mask-image:radial-gradient(ellipse,#000,transparent 68%);-webkit-mask-image:radial-gradient(ellipse,#000,transparent 68%)}
-    .core-perspective{position:absolute;inset:0;perspective:950px;perspective-origin:50% 42%;pointer-events:none}
-    .core-pointer,.core-float,.core-stack{position:absolute;width:220px;height:260px;transform-style:preserve-3d}
-    .core-pointer{left:50%;top:46%;margin-left:-110px;margin-top:-130px;transform:rotateX(var(--pointer-x,0deg)) rotateY(var(--pointer-y,0deg));transition:transform .6s cubic-bezier(.2,.7,.2,1)}
-    .core-float{transform:translateY(0)}
-    .core-stack{transform:rotateX(-12deg) rotateY(-28deg) rotateZ(-3deg)}
-    .core-layer{position:absolute;inset:0;transform-style:preserve-3d;transform:translateZ(var(--z))}
-    .core-face{position:absolute;inset:0;width:220px;height:260px;overflow:visible;backface-visibility:visible;transform:translateZ(2px)}
-    .core-edge{transform:translateZ(-2px);filter:brightness(.48)}
-    .core-glass .core-face{filter:drop-shadow(0 0 3px rgba(178,240,122,.16))}
-    .core-glass .core-edge{filter:brightness(.55)}
-    .core-heart{position:absolute;inset:68px 52px 60px;display:grid;place-content:center;background:linear-gradient(145deg,rgba(209,255,167,.55),rgba(79,122,61,.32));border:1px solid #bfdba0;border-radius:9px;box-shadow:0 0 30px rgba(197,242,119,.22),inset 0 0 24px rgba(197,242,119,.24);transform:translateZ(0);color:#f1ffd8;text-shadow:0 0 20px rgba(197,242,119,.7)}
-    .core-heart>span{font:500 74px/1 var(--display);letter-spacing:-.09em;padding-right:8px;transform:translateZ(1px)}
-    .core-heart>span>span{color:#c5f277}
-    .core-heart i{position:absolute;bottom:14px;left:calc(50% - 15px);width:30px;height:2px;background:#d6ffaf;box-shadow:0 0 10px #c5f277}
-    .core-shadow{position:absolute;left:25%;right:25%;bottom:25px;height:22px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.4),transparent 68%);filter:blur(8px)}
-    .core-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;fill:var(--line);stroke:var(--line);stroke-width:1}
-    .core-wires path{fill:none;stroke-dasharray:4 5}
-    .core-node{position:absolute;font:8px/1.5 var(--mono);letter-spacing:.09em;color:var(--muted);transition:color .5s;white-space:nowrap}
-    .core-node-backend{left:1%;top:21%}.core-node-ai{right:1%;top:27%}.core-node-tools{right:2%;bottom:25%}
-    [data-mode=backend] .core-node-backend,[data-mode=ai] .core-node-ai,[data-mode=tools] .core-node-tools{color:var(--accent)}
-    [data-mode=backend] .wire-backend,[data-mode=ai] .wire-ai,[data-mode=tools] .wire-tools{stroke:var(--accent)}
+    .core-viewport{position:relative;height:390px;overflow:hidden;overflow:clip;cursor:grab;touch-action:pan-y pinch-zoom;user-select:none;-webkit-user-select:none;border-radius:18px;outline-offset:-3px}
+    .core-viewport:focus-visible{outline:2px solid var(--accent)}.core-viewport.is-dragging{cursor:grabbing}
+    .workspace-art{position:absolute;inset:0;pointer-events:none}
+    .core-halo{position:absolute;inset:24px -10px 0;background:radial-gradient(ellipse,rgba(166,219,101,.16),rgba(134,206,103,.03) 55%,transparent 74%)}
+    .core-grid{position:absolute;inset:0;background-image:radial-gradient(var(--muted) .6px,transparent .9px);background-size:10px 10px;opacity:.15;mask-image:radial-gradient(ellipse,#000,transparent 67%);-webkit-mask-image:radial-gradient(ellipse,#000,transparent 67%)}
+    .workspace-shadow{position:absolute;left:14%;right:14%;height:60px;bottom:25px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.38),transparent 68%);filter:blur(14px)}
+    .workspace-perspective{position:absolute;inset:0;perspective:1100px;perspective-origin:50% 45%}
+    .workspace-rotation,.workspace-idle{width:420px;height:360px;transform-style:preserve-3d}
+    .workspace-rotation{position:absolute;left:50%;top:50%;margin:-180px 0 0 -210px;transform:rotateX(var(--view-x,-16deg)) rotateY(var(--view-y,-26deg));scale:.96}
+    .workspace-idle{position:relative;animation:workspace-float 8s ease-in-out infinite paused}
+    .js-motion .system-art.is-running:not(.is-manipulated) .workspace-idle{animation-play-state:running}
+    .workspace-floor{position:absolute;width:420px;height:340px;left:0;top:10px;transform:translateY(82px) rotateX(90deg);transform-style:preserve-3d}
+    .floor-outline{position:absolute;inset:0;border:1px solid rgba(197,242,119,.22);border-radius:34px;background:linear-gradient(rgba(197,242,119,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(197,242,119,.05) 1px,transparent 1px),radial-gradient(ellipse,rgba(197,242,119,.09),transparent 70%);background-size:24px 24px,24px 24px,100% 100%;box-shadow:0 0 25px rgba(197,242,119,.025)}
+    .workspace-routes{position:absolute;inset:0;width:100%;height:100%;stroke:#71825f;stroke-width:1.6;transform:translateZ(1px)}
+    .workspace-routes circle{fill:#c5f277;stroke:none;opacity:.6}
+    .workspace-routes .route{stroke-dasharray:5 5}
+    [data-mode=backend] .route-backend,[data-mode=ai] .route-ai,[data-mode=tools] .route-tools{stroke:#c5f277;stroke-width:2.2}
+    .js-motion .system-art.is-running .workspace-routes .route{animation:workspace-signal 3s linear infinite}
+    .workspace-laptop{position:absolute;width:252px;height:160px;left:84px;top:95px;transform-style:preserve-3d}
+    .laptop-screen{position:absolute;width:240px;height:156px;left:6px;top:2px;transform:translateY(-23px) translateZ(-62px) rotateX(-14deg);transform-style:preserve-3d}
+    .lid-back,.lid-rim,.laptop-display{position:absolute;inset:0;border-radius:11px;backface-visibility:hidden}
+    .lid-back{transform:translateZ(-4px) rotateY(180deg);display:grid;place-items:center;border:1px solid #879780;background:linear-gradient(145deg,#9aa394,#414a3d 55%,#73806a);color:#d6e5c9;font-size:47px;box-shadow:inset 0 0 0 2px #6c7665}
+    .lid-back span{letter-spacing:-.08em}
+    .lid-rim{background:linear-gradient(140deg,#d3dacb,#7d8974 45%,#ced6c5);transform:translateZ(-2px);backface-visibility:visible}
+    .laptop-display{background:linear-gradient(145deg,#354032,#151c14 70%);border:1px solid #9aaa8b;box-shadow:inset 0 0 0 2px #242d20;transform:translateZ(1px);padding:11px 8px 13px}
+    .laptop-camera{position:absolute;top:4px;left:calc(50% - 1px);width:2px;height:2px;background:#94a686;border-radius:50%}
+    .workspace-terminal{height:100%;border:1px solid #35442c;border-radius:3px;background:linear-gradient(115deg,#142414,#0c160e);color:#e3efd9;overflow:hidden;box-shadow:0 0 18px rgba(197,242,119,.06)}
+    .workspace-titlebar{height:21px;display:flex;align-items:center;gap:12px;padding:0 9px;border-bottom:1px solid #2a3a25;background:rgba(197,242,119,.045)}
+    .workspace-titlebar>span{display:flex;gap:3px}.workspace-titlebar i{width:3px;height:3px;border-radius:50%;background:#53654a}.workspace-titlebar i:first-child{background:#c5f277}.workspace-titlebar b{font:6px var(--mono);color:#93a889;letter-spacing:.05em}
+    .workspace-code{padding:10px 10px;font:7px/2 var(--mono);letter-spacing:-.025em;white-space:nowrap}
+    .workspace-code p:first-child{margin-bottom:7px;color:#e4efd9}.code-prompt{color:#c5f277;margin-right:5px}.code-dim{color:#63765a;margin-right:7px}.code-purple{color:#dbe8ce}.code-green{color:#bcdf90}
+    .workspace-terminal-status{display:flex;align-items:center;gap:5px;margin-top:5px;color:#91a582;font-size:6px}.workspace-terminal-status>span:first-child{color:#c5f277}
+    .workspace-caret{display:inline-block;width:3px;height:7px;background:#c5f277;margin-left:3px}
+    .laptop-signature{position:absolute;bottom:4px;left:0;width:100%;text-align:center;font:4px var(--mono);letter-spacing:.2em;color:#84927a}
+    .laptop-hinge{position:absolute;left:14px;right:14px;top:132px;height:6px;border-radius:3px;background:linear-gradient(#aeb7a4,#404b39);transform:translateZ(-82px)}
+    .laptop-deck{position:absolute;inset:-5px 0;width:252px;height:170px;transform:translateY(60px) rotateX(90deg);background:linear-gradient(125deg,#b8c1ae,#7e8a71 45%,#a3b397);border:1px solid #ccd6bf;border-radius:9px;box-shadow:inset 0 0 0 2px #94a286;backface-visibility:hidden}
+    .keyboard{position:absolute;left:24px;right:24px;top:17px;display:grid;grid-template-columns:repeat(11,1fr);gap:3px;padding:5px;background:#4e5b45;border:1px solid #718061;border-radius:5px}
+    .keyboard i{height:10px;border-radius:2px;background:linear-gradient(#283624,#1c2818);border-top:1px solid #65755a;box-shadow:0 1px 0 #172111}
+    .keyboard i:nth-last-child(6){grid-column:span 5}.keyboard i:nth-last-child(-n+4){display:none}
+    .trackpad{position:absolute;bottom:13px;left:calc(50% - 40px);width:80px;height:42px;border:1px solid #68795a;border-radius:4px;background:linear-gradient(145deg,#adbaa0,#899c7a)}
+    .speaker{position:absolute;top:25px;width:8px;height:61px;background:repeating-linear-gradient(0deg,transparent 0 2px,#607053 2px 3px)}.speaker-left{left:9px}.speaker-right{right:9px}
+    .laptop-base-front{position:absolute;left:0;top:140px;width:252px;height:7px;border-radius:0 0 7px 7px;background:linear-gradient(#c1cab5,#6d7d5e);transform:translateZ(85px);border-bottom:1px solid #3c4b30}
+    .laptop-base-front i{position:absolute;left:calc(50% - 20px);top:0;width:40px;height:2px;background:#536047;border-radius:0 0 4px 4px}
+    .laptop-base-left,.laptop-base-right{position:absolute;top:140px;left:41px;width:170px;height:7px;background:#788a68;transform:translateX(-126px) rotateY(90deg)}
+    .laptop-base-right{transform:translateX(126px) rotateY(90deg)}
+    .workspace-module{position:absolute;width:52px;height:52px;transform-style:preserve-3d}
+    .module-backend{left:0;top:135px;transform:translateZ(-112px)}.module-ai{left:340px;top:111px;transform:translateZ(-90px)}.module-tools{left:340px;top:211px;transform:translateZ(90px)}
+    .module-block{position:absolute;inset:0;transform-style:preserve-3d}
+    .module-front,.module-top,.module-side{position:absolute;inset:0;border:1px solid #718260;border-radius:8px;backface-visibility:visible}
+    .module-front{display:grid;place-items:center;background:linear-gradient(140deg,#33482a,#1f2b1a);transform:translateZ(26px);box-shadow:inset 0 0 0 2px rgba(197,242,119,.025);color:#b2c69d}
+    .module-front svg{width:27px;height:27px}
+    .module-top{transform:rotateX(90deg) translateZ(26px);background:linear-gradient(145deg,#738862,#3e542f)}
+    .module-side{transform:rotateY(90deg) translateZ(26px);background:linear-gradient(145deg,#3c522e,#23331b)}
+    .module-led{position:absolute;right:6px;bottom:6px;width:3px;height:3px;border-radius:50%;background:#7c9365}
+    .module-label{position:absolute;width:110px;left:-29px;top:65px;text-align:center;transform:translateZ(27px);font:8px/1.7 var(--mono);color:var(--muted)}
+    .module-label strong{display:block;color:var(--text);font-weight:400;letter-spacing:.16em;font-size:9px}.module-label>span{font-size:7px}
+    [data-mode=backend] .module-backend .module-front,[data-mode=ai] .module-ai .module-front,[data-mode=tools] .module-tools .module-front{color:#d8ffb0;border-color:#c5f277;background:linear-gradient(140deg,#496332,#233a20);box-shadow:0 0 22px rgba(197,242,119,.18),inset 0 0 14px rgba(197,242,119,.08)}
+    [data-mode=backend] .module-backend .module-led,[data-mode=ai] .module-ai .module-led,[data-mode=tools] .module-tools .module-led{background:#c5f277;box-shadow:0 0 9px #c5f277}
     .system-modes{display:flex;justify-content:center;gap:6px}
     .system-modes button{min-height:44px;padding:8px 15px;border:1px solid transparent;background:transparent;border-radius:6px;color:var(--muted);font:11px/1.5 var(--mono);transition:background .2s,border-color .2s,color .2s}
-    .system-modes button:hover{color:var(--text);border-color:var(--line)}
-    .system-modes button[aria-pressed=true]{color:var(--accent);border-color:var(--line);background:var(--accent-soft)}
-    .system-readout{text-align:center;min-height:70px;padding:15px 8px 0}
-    .system-stack{font:12px/1.7 var(--mono);color:var(--text)}
-    .system-description{font-size:12px;color:var(--muted);margin-top:3px}
-    .system-readout.is-changing{animation:system-copy-in .5s ease both}
-    .system-hint{display:flex;justify-content:center;gap:8px;font:9px/1.6 var(--mono);color:var(--muted);padding:4px 0 22px}
-    .core-touch-hint{display:none}
-    .system-demo{border-top:1px solid var(--line)}
-    .system-demo>summary{min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 12px;list-style:none;font:11px/1.6 var(--mono);color:var(--muted);transition:color .2s}
-    .system-demo>summary::-webkit-details-marker{display:none}
-    .system-demo>summary .accent{margin-right:8px}
-    .system-demo>summary:hover,.system-demo[open]>summary{color:var(--text)}
-    .demo-open-icon{font:22px/1 var(--display);transition:transform .25s}
-    .system-demo[open] .demo-open-icon{transform:rotate(45deg)}
-    .system-demo .hero-demo{max-width:none;margin-bottom:12px}
-    .js-motion .system-art.is-running .core-stack{animation:core-turn 24s cubic-bezier(.45,0,.2,1) infinite}
-    .js-motion .system-art.is-running .core-float{animation:core-float 6s ease-in-out infinite}
-    .js-motion .system-art.is-running .core-layer{animation:core-open 24s cubic-bezier(.45,0,.2,1) infinite}
-    .js-motion .system-art.is-running .core-wires path{animation:core-signal 3s linear infinite}
-    .js-motion .system-art.is-running .core-shadow{animation:core-shadow 6s ease-in-out infinite}
-    /* Keep timelines at their current frame when hidden, offscreen or explicitly paused. */
-    .system-art.has-started .core-stack{animation:core-turn 24s cubic-bezier(.45,0,.2,1) infinite paused}
-    .system-art.has-started .core-float{animation:core-float 6s ease-in-out infinite paused}
-    .system-art.has-started .core-layer{animation:core-open 24s cubic-bezier(.45,0,.2,1) infinite paused}
-    .system-art.has-started .core-wires path{animation:core-signal 3s linear infinite paused}
-    .system-art.has-started .core-shadow{animation:core-shadow 6s ease-in-out infinite paused}
-    @keyframes core-turn{0%{transform:rotateX(-12deg) rotateY(-28deg) rotateZ(-3deg)}30%{transform:rotateX(8deg) rotateY(28deg) rotateZ(2deg)}44%{transform:rotateX(-8deg) rotateY(48deg) rotateZ(-2deg)}60%{transform:rotateX(10deg) rotateY(210deg) rotateZ(3deg)}78%,100%{transform:rotateX(-12deg) rotateY(332deg) rotateZ(-3deg)}}
-    @keyframes core-open{0%,26%,78%,100%{transform:translateZ(var(--z))}45%,60%{transform:translateZ(calc(var(--z) * 1.6))}}
-    @keyframes core-float{50%{transform:translateY(-9px)}}
-    @keyframes core-signal{to{stroke-dashoffset:-36}}
-    @keyframes core-shadow{50%{transform:scale(.85);opacity:.55}}
-    @keyframes system-copy-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-    [data-theme=light] .core-halo{background:radial-gradient(ellipse,rgba(123,179,70,.21),rgba(134,206,103,.06) 50%,transparent 72%)}
-    [data-theme=light] .core-grid{opacity:.21}
-    [data-theme=light] .core-heart{color:#243919;text-shadow:none}
-    [data-theme=light] .core-heart>span>span{color:#456516}
-    @media(min-width:1800px){.hero-system{max-width:560px}.core-viewport{height:440px}.core-pointer{scale:1.12}}
-    @media(min-width:900px) and (max-width:1100px){.core-pointer{scale:.88}.core-node{font-size:7px}.system-modes button{padding-inline:11px}.core-viewport{height:360px}}
-    @media(max-width:899px){.hero-system{justify-self:center;max-width:520px}.hero-layout{gap:44px}.core-viewport{height:390px}}
-    @media(max-width:760px){.hero-layout{gap:36px}.system-kicker{padding-inline:0}.core-viewport{height:340px}.core-pointer{scale:.85}.core-node{font-size:7px}.system-modes button{padding-inline:12px}.system-hint{padding-bottom:14px}.system-demo>summary{padding-inline:4px}.hero-system .demo-head .terminal-dots{display:none}}
-    @media(max-width:380px){.core-viewport{height:300px}.core-pointer{scale:.72}.core-node{font-size:6px;letter-spacing:.03em}.system-kicker{font-size:9px}.system-modes{gap:2px}.system-modes button{padding-inline:10px;font-size:10px}.system-stack{font-size:11px}.system-description{font-size:11px}}
-    @media(hover:none),(pointer:coarse){.core-pointer-hint{display:none}.core-touch-hint{display:inline}}
-    .motion-paused .core-pointer{transform:none;transition:none}.motion-paused .system-readout{animation:none}
-    .motion-paused .core-pointer-hint{display:none}.motion-paused .core-touch-hint{display:inline}
-    @media(prefers-reduced-motion:reduce){.core-pointer{transform:none;transition:none}.core-pointer-hint{display:none}.core-touch-hint{display:inline}}
+    .system-modes button:hover{color:var(--text);border-color:var(--line)}.system-modes button[aria-pressed=true]{color:var(--accent);border-color:var(--line);background:var(--accent-soft)}
+    .system-readout{text-align:center;min-height:70px;padding:15px 8px 0}.system-stack{font:12px/1.7 var(--mono);color:var(--text)}.system-description{font-size:12px;color:var(--muted);margin-top:3px}.system-readout.is-changing{animation:system-copy-in .5s ease both}
+    .system-hint{display:flex;justify-content:space-between;align-items:center;padding:0 12px 8px;gap:10px;font:9px/1.6 var(--mono);color:var(--muted)}
+    .workspace-actions{display:flex;gap:15px}.core-pause,.core-reset{min-height:44px;padding:8px 0;background:transparent;color:var(--muted);font:10px/1.5 var(--mono);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px;transition:color .2s}
+    .core-pause:hover,.core-reset:hover{color:var(--accent)}.core-pause:disabled{opacity:.7;text-decoration:none}
+    .system-demo{border-top:1px solid var(--line)}.system-demo>summary{min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 12px;list-style:none;font:11px/1.6 var(--mono);color:var(--muted);transition:color .2s}.system-demo>summary::-webkit-details-marker{display:none}.system-demo>summary .accent{margin-right:8px}.system-demo>summary:hover,.system-demo[open]>summary{color:var(--text)}
+    .demo-open-icon{font:22px/1 var(--display);transition:transform .25s}.system-demo[open] .demo-open-icon{transform:rotate(45deg)}.system-demo .hero-demo{max-width:none;margin-bottom:12px}
+    @keyframes workspace-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+    @keyframes workspace-signal{to{stroke-dashoffset:-40}}@keyframes system-copy-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+    [data-theme=light] .core-halo{background:radial-gradient(ellipse,rgba(123,179,70,.18),transparent 72%)}[data-theme=light] .core-grid{opacity:.21}[data-theme=light] .floor-outline{border-color:#b4c5a1;background-color:rgba(155,181,125,.08)}
+    @media(min-width:1800px){.hero-system{max-width:560px}.core-viewport{height:440px}.workspace-rotation{scale:1.05}}
+    @media(min-width:900px) and (max-width:1100px){.workspace-rotation{scale:.8}.system-modes button{padding-inline:11px}.core-viewport{height:360px}}
+    @media(max-width:899px){.hero-system{justify-self:center;max-width:520px}.hero-layout{gap:44px}}
+    @media(max-width:760px){.hero-layout{gap:36px}.system-kicker{padding-inline:0}.core-viewport{height:340px}.workspace-rotation{scale:.72}.system-modes button{padding-inline:12px}.system-demo>summary{padding-inline:4px}.hero-system .demo-head .terminal-dots{display:none}.system-hint{padding-inline:0}}
+    @media(max-width:380px){.core-viewport{height:300px}.workspace-rotation{scale:.59}.system-kicker{font-size:9px}.system-modes{gap:2px}.system-modes button{padding-inline:10px;font-size:10px}.system-stack,.system-description{font-size:11px}.system-hint{font-size:8px}.core-pause,.core-reset{font-size:9px}.workspace-actions{gap:12px}}
+    .motion-paused .system-readout{animation:none}.motion-paused .workspace-routes .route{animation-play-state:paused}
     @media print{.hero-system{display:none!important}}
 
-    .system-hint{justify-content:space-between;align-items:center;padding:0 12px 8px;gap:12px;font-size:9px}
-    .core-pause{min-height:44px;padding:8px 0 8px 12px;background:transparent;color:var(--muted);font:10px/1.5 var(--mono);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px;transition:color .2s}
-    .core-pause:hover{color:var(--accent)}.core-pause:disabled{opacity:.7;text-decoration:none}
-    @media(max-width:380px){.system-hint{padding-inline:0;font-size:8px}.core-pause{font-size:9px}}
+    .module-back,.module-left,.module-bottom{position:absolute;inset:0;border:1px solid #718260;border-radius:8px;background:linear-gradient(140deg,#384d2c,#23331b);backface-visibility:visible}
+    .module-back{transform:rotateY(180deg) translateZ(26px)}.module-left{transform:rotateY(-90deg) translateZ(26px)}.module-bottom{transform:rotateX(-90deg) translateZ(26px)}
+    .laptop-bottom{position:absolute;inset:-5px 0;width:252px;height:170px;transform:translateY(67px) rotateX(-90deg);background:linear-gradient(135deg,#899a77,#5e7050);border:1px solid #9cab89;border-radius:9px;backface-visibility:hidden}
+    .laptop-base-rear{position:absolute;left:0;top:140px;width:252px;height:7px;background:#6d7d5e;transform:translateZ(-85px)}
   </style>
 <!-- Embedded font licenses
 Copyright 2020 The Space Grotesk Project Authors (https://github.com/floriankarsten/space-grotesk)
@@ -487,81 +489,31 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 <div class="hero-system">
   <div class="system-art" id="system-art" data-mode="backend">
     <div class="system-kicker"><span class="system-led" aria-hidden="true"></span> SYSTEMS, CONNECTED <span class="system-index" aria-hidden="true">01 / 03</span></div>
-    <div class="core-viewport" aria-hidden="true">
-      <svg class="core-defs" width="0" height="0" focusable="false"><defs>
-        <linearGradient id="core-metal" x1="0" y1="0" x2="1" y2=".8"><stop stop-color="#f5f6ee"/><stop offset=".28" stop-color="#a4afa0"/><stop offset=".48" stop-color="#e5e9dc"/><stop offset=".73" stop-color="#879780"/><stop offset="1" stop-color="#dce6cf"/></linearGradient>
-        <linearGradient id="core-glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dcffba" stop-opacity=".78"/><stop offset=".3" stop-color="#749d4b" stop-opacity=".22"/><stop offset=".6" stop-color="#bce77b" stop-opacity=".52"/><stop offset="1" stop-color="#294934" stop-opacity=".84"/></linearGradient>
-      </defs></svg>
-      <div class="core-halo"></div><div class="core-grid"></div>
-      <svg class="core-wires" viewBox="0 0 500 390" preserveAspectRatio="none" focusable="false"><path class="wire-backend" d="M54 105H110L190 163"/><path class="wire-ai" d="M444 128H390L310 178"/><path class="wire-tools" d="M428 298H356L298 236"/><circle class="wire-backend" cx="54" cy="105" r="3"/><circle class="wire-ai" cx="444" cy="128" r="3"/><circle class="wire-tools" cx="428" cy="298" r="3"/></svg>
-      <span class="core-node core-node-backend">01 / BACKEND</span><span class="core-node core-node-ai">02 / APPLIED AI</span><span class="core-node core-node-tools">03 / TOOLING</span>
-      <div class="core-shadow"></div>
-      <div class="core-perspective"><div class="core-pointer"><div class="core-float"><div class="core-stack">
-      <div class="core-layer core-shell" style="--z:-54px"><svg viewBox="0 0 220 260" class="core-face core-edge" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-metal)" fill-rule="evenodd" stroke="#e0e6d7" stroke-opacity=".6" stroke-width="1"/>
-    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#252e20" stroke-opacity=".8" stroke-width="2"/>
-    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#65705b" stroke-opacity=".55"/>
-    <g fill="#5b6553"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
-    <text x="43" y="36" font-family="monospace" font-size="8" letter-spacing="2" fill="#394530">GR / SYSTEMS</text><text x="51" y="239" font-family="monospace" font-size="7" letter-spacing="3" fill="#394530">BUILD · INSPECT</text></svg><svg viewBox="0 0 220 260" class="core-face" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-metal)" fill-rule="evenodd" stroke="#e0e6d7" stroke-opacity=".6" stroke-width="1"/>
-    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#252e20" stroke-opacity=".8" stroke-width="2"/>
-    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#65705b" stroke-opacity=".55"/>
-    <g fill="#5b6553"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
-    <text x="43" y="36" font-family="monospace" font-size="8" letter-spacing="2" fill="#394530">GR / SYSTEMS</text><text x="51" y="239" font-family="monospace" font-size="7" letter-spacing="3" fill="#394530">BUILD · INSPECT</text></svg></div>
-<div class="core-layer core-glass" style="--z:-36px"><svg viewBox="0 0 220 260" class="core-face core-edge" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
-    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
-    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
-    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
-    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg><svg viewBox="0 0 220 260" class="core-face" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
-    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
-    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
-    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
-    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg></div>
-<div class="core-layer core-glass" style="--z:-18px"><svg viewBox="0 0 220 260" class="core-face core-edge" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
-    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
-    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
-    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
-    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg><svg viewBox="0 0 220 260" class="core-face" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
-    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
-    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
-    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
-    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg></div>
-<div class="core-layer core-glass" style="--z:0px"><svg viewBox="0 0 220 260" class="core-face core-edge" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
-    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
-    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
-    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
-    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg><svg viewBox="0 0 220 260" class="core-face" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
-    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
-    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
-    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
-    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg></div>
-<div class="core-layer core-glass" style="--z:18px"><svg viewBox="0 0 220 260" class="core-face core-edge" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
-    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
-    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
-    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
-    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg><svg viewBox="0 0 220 260" class="core-face" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
-    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
-    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
-    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
-    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg></div>
-<div class="core-layer core-glass" style="--z:36px"><svg viewBox="0 0 220 260" class="core-face core-edge" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
-    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
-    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
-    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
-    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg><svg viewBox="0 0 220 260" class="core-face" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-glass)" fill-rule="evenodd" stroke="#bbed92" stroke-opacity=".6" stroke-width="1"/>
-    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#d7ffb2" stroke-opacity=".8" stroke-width="2"/>
-    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#c5f277" stroke-opacity=".55"/>
-    <g fill="#d6ffac"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
-    <path d="M26 84h9v30h8m150-26h-9v55h-8M26 176h9v-25h8m150 46h-9v-25h-8" stroke="#c5f277" stroke-opacity=".8" fill="none"/></svg></div>
-<div class="core-layer core-shell" style="--z:54px"><svg viewBox="0 0 220 260" class="core-face core-edge" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-metal)" fill-rule="evenodd" stroke="#e0e6d7" stroke-opacity=".6" stroke-width="1"/>
-    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#252e20" stroke-opacity=".8" stroke-width="2"/>
-    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#65705b" stroke-opacity=".55"/>
-    <g fill="#5b6553"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
-    <text x="43" y="36" font-family="monospace" font-size="8" letter-spacing="2" fill="#394530">GR / SYSTEMS</text><text x="51" y="239" font-family="monospace" font-size="7" letter-spacing="3" fill="#394530">BUILD · INSPECT</text></svg><svg viewBox="0 0 220 260" class="core-face" focusable="false"><path d="M30 8H190Q212 8 212 30V230Q212 252 190 252H30Q8 252 8 230V30Q8 8 30 8ZM58 60Q48 60 48 70V198Q48 208 58 208H162Q172 208 172 198V70Q172 60 162 60Z" fill="url(#core-metal)" fill-rule="evenodd" stroke="#e0e6d7" stroke-opacity=".6" stroke-width="1"/>
-    <rect x="44" y="56" width="132" height="156" rx="13" fill="none" stroke="#252e20" stroke-opacity=".8" stroke-width="2"/>
-    <path d="M58 217H162M25 61V208M195 61V208" fill="none" stroke="#65705b" stroke-opacity=".55"/>
-    <g fill="#5b6553"><circle cx="25" cy="30" r="2"/><circle cx="195" cy="30" r="2"/><circle cx="25" cy="230" r="2"/><circle cx="195" cy="230" r="2"/></g>
-    <text x="43" y="36" font-family="monospace" font-size="8" letter-spacing="2" fill="#394530">GR / SYSTEMS</text><text x="51" y="239" font-family="monospace" font-size="7" letter-spacing="3" fill="#394530">BUILD · INSPECT</text></svg></div>
-      <div class="core-heart"><span>g<span>.</span></span><i></i></div>
-      </div></div></div></div>
+    <div class="core-viewport" tabindex="0" role="group" aria-label="Interactive developer workspace. Drag to rotate, or use arrow keys. Press Home to reset the view." aria-describedby="workspace-instructions">
+      <div class="workspace-art" aria-hidden="true">
+        <div class="core-halo"></div><div class="core-grid"></div><div class="workspace-shadow"></div>
+        <div class="workspace-perspective"><div class="workspace-rotation"><div class="workspace-idle">
+          <div class="workspace-floor"><div class="floor-outline"></div><svg class="workspace-routes" viewBox="0 0 420 340" fill="none" focusable="false"><path class="route route-backend" d="M100 93v56q0 15 15 15h95v63"/><path class="route route-ai" d="M329 103v45q0 16-16 16H210v63"/><path class="route route-tools" d="M343 283h-57q-16 0-16-16v-40h-60"/><circle cx="100" cy="93" r="4"/><circle cx="329" cy="103" r="4"/><circle cx="343" cy="283" r="4"/><circle cx="210" cy="227" r="5"/></svg></div>
+          <div class="workspace-laptop">
+            <div class="laptop-screen">
+              <div class="lid-back"><span>g.</span></div>
+              <div class="lid-rim"></div>
+              <div class="laptop-display">
+                <span class="laptop-camera"></span>
+                <div class="workspace-terminal">
+                  <div class="workspace-titlebar"><span><i></i><i></i><i></i></span><b>gaurav ~ workspace</b></div>
+                  <div class="workspace-code"><p><span class="code-prompt">❯</span> build something useful</p><p><span class="code-dim">01</span> <span class="code-purple">connect</span>(<span class="code-green">services</span>)</p><p><span class="code-dim">02</span> <span class="code-purple">inspect</span>(<span class="code-green">actions</span>)</p><p><span class="code-dim">03</span> <span class="code-purple">ship</span>(<span class="code-green">with_confidence</span>)</p><div class="workspace-terminal-status"><span>✓</span> ready to build<span class="workspace-caret"></span></div></div>
+                </div>
+                <span class="laptop-signature">GAURAV / ENGINEERING</span>
+              </div>
+            </div>
+            <div class="laptop-hinge"></div>
+            <div class="laptop-deck"><div class="speaker speaker-left"></div><div class="keyboard"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="speaker speaker-right"></div><div class="trackpad"></div></div>
+            <div class="laptop-bottom"></div><div class="laptop-base-rear"></div><div class="laptop-base-front"><i></i></div><div class="laptop-base-left"></div><div class="laptop-base-right"></div>
+          </div>
+          <div class="workspace-module module-backend"><div class="module-block"><div class="module-top"></div><div class="module-side"></div><div class="module-back"></div><div class="module-left"></div><div class="module-bottom"></div><div class="module-front"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><ellipse cx="16" cy="8" rx="10" ry="4"/><path d="M6 8v16c0 5 20 5 20 0V8M6 16c0 5 20 5 20 0"/></svg><span class="module-led"></span></div></div><div class="module-label"><strong>DATA</strong><span>store · retrieve</span></div></div><div class="workspace-module module-ai"><div class="module-block"><div class="module-top"></div><div class="module-side"></div><div class="module-back"></div><div class="module-left"></div><div class="module-bottom"></div><div class="module-front"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><rect x="5" y="10" width="22" height="17" rx="5"/><path d="M16 5v5M12 20h8"/><circle cx="16" cy="4" r="1"/><path d="M11 16h1m8 0h1M2 16v6m28-6v6"/></svg><span class="module-led"></span></div></div><div class="module-label"><strong>AGENTS</strong><span>inspect · act</span></div></div><div class="workspace-module module-tools"><div class="module-block"><div class="module-top"></div><div class="module-side"></div><div class="module-back"></div><div class="module-left"></div><div class="module-bottom"></div><div class="module-front"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="m11 8-8 8 8 8m10-16 8 8-8 8M18 5l-4 22"/></svg><span class="module-led"></span></div></div><div class="module-label"><strong>APIs</strong><span>connect · build</span></div></div>
+        </div></div></div>
+      </div>
     </div>
     <div class="system-modes" role="group" aria-label="Explore areas of work">
       <button type="button" data-core-mode="backend" aria-pressed="true">Backend</button>
@@ -569,7 +521,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       <button type="button" data-core-mode="tools" aria-pressed="false">Tooling</button>
     </div>
     <div class="system-readout"><p class="system-stack">Java · Go · Spring</p><p class="system-description">The systems behind procurement.</p></div>
-    <div class="system-hint"><span><span class="core-pointer-hint">Move your cursor to explore ↗</span><span class="core-touch-hint">Select an area to explore</span></span><button type="button" class="core-pause" aria-pressed="false">Pause motion</button></div>
+    <div class="system-hint"><span id="workspace-instructions">Drag to rotate <span aria-hidden="true">↔</span></span><div class="workspace-actions"><button type="button" class="core-reset">Reset view</button><button type="button" class="core-pause" aria-pressed="false">Pause motion</button></div></div>
   </div>
   <details class="system-demo"><summary><span><span class="accent" aria-hidden="true">&gt;_</span> Try the action preview</span><span class="demo-open-icon" aria-hidden="true">+</span></summary>
             <div class="hero-demo" id="hero-demo" role="group" tabindex="0" aria-labelledby="demo-title" aria-describedby="demo-summary demo-caption">
@@ -1036,11 +988,14 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   document.addEventListener('click', function (event) { if (!event.target.closest('.stat')) stats.forEach(dismissReceipt); });
   document.addEventListener('keydown', function (event) { if (event.key === 'Escape') stats.forEach(dismissReceipt); });
 
-  // Lightweight vector surfaces use CSS 3D transforms. No WebGL or assets to load.
-  // The same control governs pointer movement, mode cycling and CSS timelines.
+  // CSS supplies the idle animation; direct input keeps a precise, persistent view.
+  // Touch uses only horizontal movement so a vertical swipe still scrolls the page.
   function initSystemCore() {
     var art = document.getElementById('system-art');
     if (!art) return;
+    var viewport = art.querySelector('.core-viewport');
+    var rotation = art.querySelector('.workspace-rotation');
+    if (!viewport || !rotation) return;
     var modes = ['backend', 'ai', 'tools'];
     var copy = {
       backend: ['Java · Go · Spring', 'The systems behind procurement.'],
@@ -1048,10 +1003,10 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       tools: ['CLI workflows · Git · Observability', 'Tools for the people running the systems.']
     };
     var buttons = Array.from(art.querySelectorAll('[data-core-mode]'));
-    var pointer = art.querySelector('.core-pointer');
     var readout = art.querySelector('.system-readout');
-    var visible = false, engaged = false, timer = 0, pointerFrame = 0;
-    var manual = false, running = false;
+    var visible = false, engaged = false, timer = 0;
+    var manual = false, running = false, drag = null;
+    var viewX = -16, viewY = -26;
     function setMode(mode) {
       art.dataset.mode = mode;
       buttons.forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.coreMode === mode)); });
@@ -1069,16 +1024,32 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
         cycle();
       }, 8000);
     }
-    function resetPointer() {
-      cancelAnimationFrame(pointerFrame); pointerFrame = 0;
-      pointer.style.removeProperty('--pointer-x');
-      pointer.style.removeProperty('--pointer-y');
+    function setView(x, y) {
+      viewX = Math.max(-42, Math.min(24, x));
+      viewY = y;
+      rotation.style.setProperty('--view-x', viewX + 'deg');
+      rotation.style.setProperty('--view-y', viewY + 'deg');
+      art.classList.add('is-manipulated');
+    }
+    function endDrag(event) {
+      if (!drag || (event && event.pointerId !== undefined && event.pointerId !== drag.id)) return;
+      var pointerId = drag.id;
+      drag = null;
+      viewport.classList.remove('is-dragging');
+      try { if (viewport.hasPointerCapture(pointerId)) viewport.releasePointerCapture(pointerId); } catch (e) {}
+    }
+    function resetView() {
+      endDrag();
+      viewX = -16; viewY = -26;
+      rotation.style.removeProperty('--view-x');
+      rotation.style.removeProperty('--view-y');
+      art.classList.remove('is-manipulated');
     }
     syncCoreMotion = function () {
       running = visible && !paused && !document.hidden;
       if (running) art.classList.add('has-started');
       art.classList.toggle('is-running', running);
-      if (!running) resetPointer();
+      if (document.hidden || !visible) endDrag();
       var pauseButton = art.querySelector('.core-pause');
       pauseButton.disabled = reduced.matches;
       pauseButton.setAttribute('aria-pressed', String(paused));
@@ -1086,6 +1057,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       cycle();
     };
     art.querySelector('.core-pause').addEventListener('click', function () { motionButton.click(); });
+    art.querySelector('.core-reset').addEventListener('click', resetView);
     buttons.forEach(function (button) {
       button.addEventListener('click', function () {
         manual = true;
@@ -1094,26 +1066,44 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       });
     });
     art.addEventListener('pointerenter', function () { engaged = true; cycle(); });
-    art.addEventListener('pointerleave', function () { engaged = art.contains(document.activeElement); resetPointer(); cycle(); });
+    art.addEventListener('pointerleave', function () { engaged = art.contains(document.activeElement); cycle(); });
     art.addEventListener('focusin', function () { engaged = true; cycle(); });
     art.addEventListener('focusout', function (event) {
       if (!art.contains(event.relatedTarget)) { engaged = finePointer.matches && art.matches(':hover'); cycle(); }
     });
-    art.addEventListener('pointermove', function (event) {
-      if (!running || !finePointer.matches) return;
-      cancelAnimationFrame(pointerFrame);
-      pointerFrame = requestAnimationFrame(function () {
-        pointerFrame = 0;
-        if (!running) return;
-        var rect = art.getBoundingClientRect();
-        var x = Math.max(-.5, Math.min(.5, (event.clientX - rect.left) / rect.width - .5));
-        var y = Math.max(-.5, Math.min(.5, (event.clientY - rect.top) / rect.height - .5));
-        pointer.style.setProperty('--pointer-x', -y * 16 + 'deg');
-        pointer.style.setProperty('--pointer-y', x * 26 + 'deg');
-      });
+    viewport.addEventListener('pointerdown', function (event) {
+      if (drag || event.isPrimary === false || event.button !== 0) return;
+      if (event.target.closest('button, a, input, select, textarea')) return;
+      drag = { id: event.pointerId, x: event.clientX, y: event.clientY, viewX: viewX, viewY: viewY, touch: event.pointerType === 'touch' };
+      if (!drag.touch) {
+        event.preventDefault();
+        viewport.focus({ preventScroll: true });
+        setView(viewX, viewY);
+      }
+      viewport.classList.add('is-dragging');
+      try { viewport.setPointerCapture(event.pointerId); } catch (e) { endDrag(); }
     });
+    viewport.addEventListener('pointermove', function (event) {
+      if (!drag || event.pointerId !== drag.id) return;
+      var dx = event.clientX - drag.x, dy = event.clientY - drag.y;
+      if (drag.touch && Math.abs(dx) < 5) return;
+      setView(drag.touch ? drag.viewX : drag.viewX - dy * .3, drag.viewY + dx * .4);
+    });
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+    viewport.addEventListener('lostpointercapture', endDrag);
+    viewport.addEventListener('keydown', function (event) {
+      if (event.altKey || event.ctrlKey || event.metaKey) return;
+      var moves = { ArrowLeft: [0, -10], ArrowRight: [0, 10], ArrowUp: [10, 0], ArrowDown: [-10, 0] };
+      if (event.key === 'Home') { event.preventDefault(); resetView(); }
+      else if (moves[event.key]) {
+        event.preventDefault();
+        endDrag();
+        setView(viewX + moves[event.key][0], viewY + moves[event.key][1]);
+      }
+    });
+    addEventListener('blur', function () { endDrag(); });
     document.addEventListener('visibilitychange', syncCoreMotion);
-    finePointer.addEventListener('change', resetPointer);
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
         visible = entries[0].isIntersecting;
